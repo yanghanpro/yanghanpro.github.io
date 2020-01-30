@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="description" content="">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  <title>SpringBoot 整合 ~ Hexo</title>
+
+  <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
+<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
+<link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css"  >
+<link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css"  >
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css"  >
+
+<link rel="stylesheet" href="/css/main.css"  >
+
+
+  <link rel="stylesheet" href="/lib/fancybox/jquery.fancybox.min.css"  >
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Hexo</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">Archives</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">Categories</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">Tags</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">About</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background"
+         style="background: url('/img/default.png')no-repeat center center;
+           background-size: cover;
+           background-attachment: fixed;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  Thursday, January 30th 2020, 5:51 pm
+                </p>
+              
+
+              <p>
+                
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    1.3k 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      6 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
+            <h2 id="将要做的几件事"><a href="#将要做的几件事" class="headerlink" title="将要做的几件事"></a>将要做的几件事</h2><blockquote>
+<p><strong>整合SpringMVC</strong></p>
+<ol>
+<li>修改端口（server.port=8888）</li>
+<li>访问静态资源（classpath:META/resources | classpath:resources | classpath:static |classpath:public）</li>
+<li>配置拦截器<ol>
+<li>自定义拦截器：实现HandlerInterceptor接口</li>
+<li>配置拦截器：自定义一个Java配置类（@Configuration），实现WebMvcConfigurer接口</li>
+</ol>
+</li>
+</ol>
+<p><strong>整合数据源</strong></p>
+<ol>
+<li>引入jdbc启动器，mysql驱动</li>
+<li>添加配置<ol>
+<li>spring.datasource.url</li>
+<li>spring.datasource.username</li>
+<li>spring.datasource.password</li>
+</ol>
+</li>
+</ol>
+<p><strong>整合Mybatis</strong></p>
+<ol>
+<li>引入启动器</li>
+<li>覆盖默认配置<ol>
+<li>mybatis.type-aliases-package=com.yang.boot.bean</li>
+<li>mybatis.mapper-locations=<code>classpath:mybatis/mappers/**/*.xml</code></li>
+<li>代码：定义一个接口，在接口上加入@Mapper注解</li>
+</ol>
+</li>
+</ol>
+<p><strong>整合通用Mapper</strong></p>
+<ol>
+<li>引入启动器</li>
+<li>代码：接口继承<code>Mapper</code></li>
+</ol>
+<p><strong>整合事务</strong></p>
+<ol>
+<li>添加@Transactional</li>
+</ol>
+</blockquote>
+<h2 id="1-整合-SpringMVC"><a href="#1-整合-SpringMVC" class="headerlink" title="1. 整合 SpringMVC"></a>1. 整合 SpringMVC</h2><h3 id="配置拦截器"><a href="#配置拦截器" class="headerlink" title="配置拦截器"></a>配置拦截器</h3><p><img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200125204045.png" srcset="/img/loading.gif" alt="img"></p>
+<p>(0) 项目结构：</p>
+<p><img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200125232518.png" srcset="/img/loading.gif" alt="img"></p>
+<p>(1) 拦截器： <code>com.yang.demospringmvc.interceptor.MyInterceptor.java</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">package com.yang.boot.demospringmvc.interceptor;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">import org.springframework.stereotype.Component;</span><br><span class="line">import org.springframework.stereotype.Controller;</span><br><span class="line">import org.springframework.web.servlet.HandlerInterceptor;</span><br><span class="line">import org.springframework.web.servlet.ModelAndView;</span><br><span class="line"></span><br><span class="line">import javax.servlet.http.HttpServletRequest;</span><br><span class="line">import javax.servlet.http.HttpServletResponse;</span><br><span class="line"></span><br><span class="line">@Component  &#x2F;&#x2F;注册到spring容器中</span><br><span class="line">public class MyInterceptor implements HandlerInterceptor &#123;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public boolean preHandle(HttpServletRequest request,</span><br><span class="line">                             HttpServletResponse response,</span><br><span class="line">                             Object handler) throws Exception &#123;</span><br><span class="line">        System.out.println(&quot;前置方法正在执行...&quot;);</span><br><span class="line">        &#x2F;&#x2F; 返回值 true:放行 false:拦截</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void postHandle(HttpServletRequest request,</span><br><span class="line">                           HttpServletResponse response,</span><br><span class="line">                           Object handler,</span><br><span class="line">                           ModelAndView modelAndView) throws Exception &#123;</span><br><span class="line">        System.out.println(&quot;后置方法正在执行...&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void afterCompletion(HttpServletRequest request,</span><br><span class="line">                                HttpServletResponse response,</span><br><span class="line">                                Object handler,</span><br><span class="line">                                Exception ex) throws Exception &#123;</span><br><span class="line">        System.out.println(&quot;完成方法正在执行...&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>(2) 自定义拦截器配置类：<code>com.yang.demospringmvc.config.WebMvcCOnfiguration.java</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">package com.yang.boot.demospringmvc.config;</span><br><span class="line"></span><br><span class="line">import com.yang.boot.demospringmvc.interceptor.MyInterceptor;</span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line">import org.springframework.context.annotation.Configuration;</span><br><span class="line">import org.springframework.web.servlet.config.annotation.InterceptorRegistry;</span><br><span class="line">import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;</span><br><span class="line"></span><br><span class="line">&#x2F;**</span><br><span class="line"> * 1. 声明这是一个配置类</span><br><span class="line"> * 2. 实现 WebMvcConfigurer 接口</span><br><span class="line"> *&#x2F;</span><br><span class="line">@Configuration</span><br><span class="line">public class WebMvcConfiguration implements WebMvcConfigurer &#123;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    private MyInterceptor myInterceptor;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void addInterceptors(InterceptorRegistry registry) &#123;</span><br><span class="line">        &#x2F;&#x2F; &quot;&#x2F;*&quot;表示所有单级请求   &quot;&#x2F;**&quot;表示所有多级请求</span><br><span class="line">        registry.addInterceptor(myInterceptor).</span><br><span class="line">                addPathPatterns(&quot;&#x2F;**&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>(3) 控制器：<code>com.yang.demospringmvc.controller.UserController.java</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">package com.yang.boot.demospringmvc.controller;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">import org.springframework.stereotype.Controller;</span><br><span class="line">import org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line">import org.springframework.web.bind.annotation.ResponseBody;</span><br><span class="line"></span><br><span class="line">@Controller</span><br><span class="line">public class UserController &#123;</span><br><span class="line"></span><br><span class="line">    @RequestMapping(&quot;hello&quot;)</span><br><span class="line">    @ResponseBody</span><br><span class="line">    public String hello()&#123;</span><br><span class="line">        return &quot;hello&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>(4) 全局配置文件：<code>application.properties</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 修改服务器端口</span><br><span class="line">server.port&#x3D;8888</span><br><span class="line"># 修改日志级别</span><br><span class="line">logging.level.org.springframework&#x3D;DEBUG</span><br></pre></td></tr></table></figure>
+
+<p>(5) 引导类：<code>com.yang.demospringmvc.DemoSpringmvcApplication.java</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">package com.yang.boot.demospringmvc;</span><br><span class="line"></span><br><span class="line">import org.springframework.boot.SpringApplication;</span><br><span class="line">import org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"></span><br><span class="line">@SpringBootApplication</span><br><span class="line">public class DemoSpringmvcApplication &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        SpringApplication.run(DemoSpringmvcApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>(6) 输出结果</p>
+<p><img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200125232107.png" srcset="/img/loading.gif" alt="img"></p>
+<h2 id="2-整合数据源-内置"><a href="#2-整合数据源-内置" class="headerlink" title="2. 整合数据源[内置]"></a>2. 整合数据源[内置]</h2><p><code>SpringBoot</code> 默认数据源为 <code>HikariCP</code>，是一个高性能的JDBC连接池，性能高。</p>
+<p>(1) 引入依赖：<code>pom.xml</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-jdbc&lt;&#x2F;artifactId&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;mysql&lt;&#x2F;groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;mysql-connector-java&lt;&#x2F;artifactId&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>(2) 全局配置文件：<code>application.properties</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 修改服务器端口</span><br><span class="line">server.port&#x3D;8888</span><br><span class="line"># 修改日志级别</span><br><span class="line">logging.level.org.springframework&#x3D;DEBUG</span><br><span class="line"></span><br><span class="line">spring.datasource.url&#x3D;jdbc:mysql:&#x2F;&#x2F;localhost:3306&#x2F;springboot</span><br><span class="line">spring.datasource.username&#x3D;root</span><br><span class="line">spring.datasource.password&#x3D;123456</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-整合Mybatis"><a href="#3-整合Mybatis" class="headerlink" title="3. 整合Mybatis"></a>3. 整合Mybatis</h2><p><img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200126110900.png" srcset="/img/loading.gif" alt="img"></p>
+<p>(1) 导入依赖：<code>pom.xml</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- mybatis --&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.mybatis.spring.boot&lt;&#x2F;groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;mybatis-spring-boot-starter&lt;&#x2F;artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.3.2&lt;&#x2F;version&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 通用Mapper,作者开发的 --&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;tk.mybatis&lt;&#x2F;groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;mapper-spring-boot-starter&lt;&#x2F;artifactId&gt;</span><br><span class="line">    &lt;version&gt;2.0.2&lt;&#x2F;version&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>(2) 全局配置文件：<code>application.properties</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 修改服务器端口</span><br><span class="line">server.port&#x3D;8888</span><br><span class="line"># 修改日志级别</span><br><span class="line">logging.level.org.springframework&#x3D;DEBUG</span><br><span class="line"></span><br><span class="line">spring.datasource.url&#x3D;jdbc:mysql:&#x2F;&#x2F;localhost:3306&#x2F;springboot</span><br><span class="line">spring.datasource.username&#x3D;root</span><br><span class="line">spring.datasource.password&#x3D;123456</span><br><span class="line"></span><br><span class="line">mybatis.type-aliases-package&#x3D;com.yang.boot.demospringmvc.bean</span><br><span class="line">#mybatis-mapper-locations&#x3D;clsspath:mybatis&#x2F;mappers&#x2F;**&#x2F;*.xml</span><br></pre></td></tr></table></figure>
+
+<p>(3) 实体类：<code>com.yang.boot.demospringboot.bean.User.java</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">package com.yang.boot.demospringmvc.bean;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">import org.hibernate.validator.constraints.ISBN;</span><br><span class="line"></span><br><span class="line">import javax.persistence.GeneratedValue;</span><br><span class="line">import javax.persistence.GenerationType;</span><br><span class="line">import javax.persistence.Id;</span><br><span class="line">import javax.persistence.Table;</span><br><span class="line"></span><br><span class="line">@Table(name &#x3D; &quot;tb_user&quot;)</span><br><span class="line">public class User &#123;</span><br><span class="line">    @Id</span><br><span class="line">    @GeneratedValue(strategy &#x3D; GenerationType.IDENTITY)</span><br><span class="line">    private Long id;</span><br><span class="line">    private String username;</span><br><span class="line">    private String password;</span><br><span class="line">    &#x2F;&#x2F;getter setter</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>(4) Mybatis 映射接口：<code>com.yang.boot.demospringboot.mapper.UserMapper.java</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">package com.yang.boot.demospringmvc.mapper;</span><br><span class="line"></span><br><span class="line">import com.yang.boot.demospringmvc.bean.User;</span><br><span class="line">import org.apache.ibatis.annotations.Mapper;</span><br><span class="line"></span><br><span class="line">&#x2F;**</span><br><span class="line"> * 整合Mybatis：需要实现通用 Mapper 接口</span><br><span class="line"> *&#x2F;</span><br><span class="line">@Mapper</span><br><span class="line">public interface UserMapper extends tk.mybatis.mapper.common.Mapper&lt;User&gt; &#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-整合事务"><a href="#4-整合事务" class="headerlink" title="4. 整合事务"></a>4. 整合事务</h2><p>Maven已经将<code>org.springframework:spring.tx</code>依赖导入了，因此无需再导入依赖。</p>
+<p>业务层：<code>com.yang.boot.demospringboot.UserService.java</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">package com.yang.boot.demospringmvc.service;</span><br><span class="line"></span><br><span class="line">import com.yang.boot.demospringmvc.bean.User;</span><br><span class="line">import com.yang.boot.demospringmvc.mapper.UserMapper;</span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line">import org.springframework.stereotype.Service;</span><br><span class="line">import org.springframework.transaction.annotation.Transactional;</span><br><span class="line"></span><br><span class="line">@Service</span><br><span class="line">public class UserService &#123;</span><br><span class="line">    </span><br><span class="line">    @Autowired</span><br><span class="line">    private UserMapper userMapper;</span><br><span class="line">    </span><br><span class="line">    public User queryUserById(Long id)&#123;</span><br><span class="line">        return this.userMapper.selectByPrimaryKey(id);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    @Transactional</span><br><span class="line">    public void deleteUserById(Long id)&#123;</span><br><span class="line">        this.userMapper.deleteByPrimaryKey(id);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="测试整合结果"><a href="#测试整合结果" class="headerlink" title="测试整合结果"></a>测试整合结果</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">package com.yang.boot.demospringmvc.controller;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">import com.yang.boot.demospringmvc.bean.User;</span><br><span class="line">import com.yang.boot.demospringmvc.service.UserService;</span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line">import org.springframework.stereotype.Controller;</span><br><span class="line">import org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line">import org.springframework.web.bind.annotation.PathVariable;</span><br><span class="line">import org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line">import org.springframework.web.bind.annotation.ResponseBody;</span><br><span class="line"></span><br><span class="line">@Controller</span><br><span class="line">@RequestMapping(&quot;user&quot;)</span><br><span class="line">public class UserController &#123;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    private UserService userService;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 通过ID查询用户</span><br><span class="line">    @GetMapping(&quot;&#123;id&#125;&quot;)</span><br><span class="line">    @ResponseBody</span><br><span class="line">    public User queryUserById(@PathVariable(&quot;id&quot;)Long id)&#123;</span><br><span class="line">        return this.userService.queryUserById(id);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @RequestMapping(&quot;hello&quot;)</span><br><span class="line">    @ResponseBody</span><br><span class="line">    public String hello()&#123;</span><br><span class="line">        return &quot;hello&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200126113739.png" srcset="/img/loading.gif" alt="img"></p>
+
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+    <div id="tocbot"></div>
+  </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+  </div>
+</div>
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <i class="iconfont icon-love"></i>
+    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    <br>
+
+    
+  
+    <!-- 不蒜子统计PV -->
+    
+    &nbsp;<span id="busuanzi_container_site_pv">总访问量 
+          <span id="busuanzi_value_site_pv"></span> 次</span>&nbsp;
+  
+  
+    <!-- 不蒜子统计UV -->
+    
+    &nbsp;<span id="busuanzi_container_site_uv">总访客数 
+            <span id="busuanzi_value_site_uv"></span> 人</span>&nbsp;
+  
+  <br>
+
+
+
+    
+
+
+    <!-- cnzz Analytics icon -->
+    
+
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="/lib/jquery/jquery.min.js" ></script>
+<script src="/lib/popper/popper.min.js" ></script>
+<script src="/lib/bootstrap/js/bootstrap.min.js" ></script>
+<script src="/lib/mdbootstrap/js/mdb.min.js" ></script>
+<script src="/js/main.js" ></script>
+
+
+  <script src="/js/lazyload.js" ></script>
+
+
+
+  
+    <script src="/lib/tocbot/tocbot.min.js" ></script>
+  
+  <script src="/js/post.js" ></script>
+
+
+
+  <script src="/lib/smooth-scroll/smooth-scroll.min.js" ></script>
+
+
+
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+<!-- Plugins -->
+
+
+  
+
+  
+
+  
+
+  
+
+  <!-- cnzz Analytics -->
+  
+
+
+
+  <script src="/lib/prettify/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script src="/lib/typed/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "SpringBoot 整合&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script src="/lib/anchor/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "false",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script src="/lib/fancybox/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

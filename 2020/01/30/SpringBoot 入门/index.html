@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="description" content="">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  <title>SpringBoot 入门 ~ Hexo</title>
+
+  <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
+<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
+<link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css"  >
+<link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css"  >
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css"  >
+
+<link rel="stylesheet" href="/css/main.css"  >
+
+
+  <link rel="stylesheet" href="/lib/fancybox/jquery.fancybox.min.css"  >
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Hexo</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">Archives</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">Categories</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">Tags</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">About</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background"
+         style="background: url('/img/default.png')no-repeat center center;
+           background-size: cover;
+           background-attachment: fixed;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  Thursday, January 30th 2020, 5:51 pm
+                </p>
+              
+
+              <p>
+                
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    1.2k 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      6 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
+            <h2 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a>简单介绍</h2><h2 id="第一个SprinBoot程序"><a href="#第一个SprinBoot程序" class="headerlink" title="第一个SprinBoot程序"></a>第一个SprinBoot程序</h2><p><img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200126134134.png" srcset="/img/loading.gif" alt="img"></p>
+<p>引入启动器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;-- 所有的springboot都要继承该父工程 --&gt;</span><br><span class="line">&lt;parent&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-parent&lt;&#x2F;artifactId&gt;</span><br><span class="line">    &lt;version&gt;2.2.4.RELEASE&lt;&#x2F;version&gt;</span><br><span class="line">    &lt;relativePath&#x2F;&gt; &lt;!-- lookup parent from repository --&gt;</span><br><span class="line">&lt;&#x2F;parent&gt;</span><br><span class="line"></span><br><span class="line">&lt;-- web启动器 --&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-web&lt;&#x2F;artifactId&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>控制器类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">package com.yang.demo.controller;</span><br><span class="line"></span><br><span class="line">import org.springframework.stereotype.Controller;</span><br><span class="line">import org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line">import org.springframework.web.bind.annotation.ResponseBody;</span><br><span class="line"></span><br><span class="line">@Controller</span><br><span class="line">@RequestMapping(&quot;demo&quot;)</span><br><span class="line">public class DemoController &#123;</span><br><span class="line">    </span><br><span class="line">    @RequestMapping(&quot;hello&quot;)</span><br><span class="line">    @ResponseBody</span><br><span class="line">    public String Hello()&#123;</span><br><span class="line">        return &quot;hello springboot!&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>引导类：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">package com.yang.demo;</span><br><span class="line"></span><br><span class="line">import org.springframework.boot.SpringApplication;</span><br><span class="line">import org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"></span><br><span class="line">&#x2F;**</span><br><span class="line"> * @SpringBootApplication &#x3D; </span><br><span class="line"> *      * @EnableAutoConfiguration：启用自动配置</span><br><span class="line"> *      * @ComponentScan：开启注解扫描</span><br><span class="line"> *      * SpringBootConfiguration：作用等同于@Configuration，表示该类是一个配置类，不同的是一个工程只包含一个该注解</span><br><span class="line"> *&#x2F;</span><br><span class="line"></span><br><span class="line">@SpringBootApplication</span><br><span class="line">public class DemoApplication &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        SpringApplication.run(DemoApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出结果</p>
+<p><img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200126133018.png" srcset="/img/loading.gif" alt="img"></p>
+<h2 id="自定义配置类"><a href="#自定义配置类" class="headerlink" title="自定义配置类"></a>自定义配置类</h2><p>SpringBoot内部已经配置了一百多个配置类（真是贴心啊），我们可以直接使用</p>
+<p>当我们需要其他的配置类时，我们也可以自定义一个配置类</p>
+<p>回顾以前SSM配置数据库连接池的方式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean name&#x3D;&quot;dataSource&quot; class&#x3D;&quot;com.alibaba.druid.pool.DruidDataSource&quot; init-method&#x3D;&quot;init&quot; destroy-method&#x3D;&quot;close&quot;&gt;</span><br><span class="line">    &lt;property name&#x3D;&quot;driverClassName&quot; value&#x3D;&quot;$&#123;jdbc.driverClassName&#125;&quot; &#x2F;&gt; </span><br><span class="line">    &lt;property name&#x3D;&quot;url&quot; value&#x3D;&quot;$&#123;jdbc.url&#125;&quot; &#x2F;&gt;</span><br><span class="line">    &lt;property name&#x3D;&quot;username&quot; value&#x3D;&quot;$&#123;jdbc.username&#125;&quot; &#x2F;&gt;</span><br><span class="line">    &lt;property name&#x3D;&quot;password&quot; value&#x3D;&quot;$&#123;jdbc.password&#125;&quot; &#x2F;&gt;</span><br><span class="line">&lt;&#x2F;bean&gt;</span><br></pre></td></tr></table></figure>
+
+<p>SpringBoot使用Java配置类，来代替xml配置：</p>
+<blockquote>
+<p>@Configuration：声明一个类作为配置类，代替<code>xml</code>文件</p>
+<p>@Bean：声明在方法上，将方法的返回值加入spring容器，代替``标签</p>
+<p>@PropertySource：指定外部属性文件</p>
+<p>@Value：属性注入</p>
+</blockquote>
+<h3 id="传统配置类"><a href="#传统配置类" class="headerlink" title="传统配置类"></a>传统配置类</h3><p><img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200126135650.png" srcset="/img/loading.gif" alt="img"></p>
+<p>引入启动器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.github.drtrang&lt;&#x2F;groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;druid-spring-boot2-starter&lt;&#x2F;artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.1.10&lt;&#x2F;version&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>jdbc配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">jdbc.driverClassName&#x3D;com.mysql.jdbc.Driver</span><br><span class="line">jdbc.url&#x3D;jdbc:mysql:&#x2F;&#x2F;&#x2F;speingboot</span><br><span class="line">jdbc.username&#x3D;root</span><br><span class="line">jdbc.password&#x3D;123456</span><br></pre></td></tr></table></figure>
+
+<p>java配置类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">package com.yang.demo.config;</span><br><span class="line"></span><br><span class="line">import com.alibaba.druid.pool.DruidDataSource;</span><br><span class="line">import org.springframework.beans.factory.annotation.Value;</span><br><span class="line">import org.springframework.context.annotation.Bean;</span><br><span class="line">import org.springframework.context.annotation.Configuration;</span><br><span class="line">import org.springframework.context.annotation.PropertySource;</span><br><span class="line"></span><br><span class="line">import javax.sql.DataSource;</span><br><span class="line"></span><br><span class="line">@Configuration</span><br><span class="line">@PropertySource(&quot;classpath:jdbc.properties&quot;)</span><br><span class="line">public class jdbcConfiguration &#123;</span><br><span class="line">    </span><br><span class="line">    @Value(&quot;$&#123;jdbc.driverClassName&#125;&quot;)</span><br><span class="line">    private String driverClassName;</span><br><span class="line">    @Value(&quot;$&#123;jdbc.url&#125;&quot;)</span><br><span class="line">    private String url;</span><br><span class="line">    @Value(&quot;$&#123;jdbc.username&#125;&quot;)</span><br><span class="line">    private String username;</span><br><span class="line">    @Value(&quot;$&#123;jdbc.password&#125;&quot;)</span><br><span class="line">    private String password;</span><br><span class="line"></span><br><span class="line">    @Bean</span><br><span class="line">    public DataSource dataSource()&#123;</span><br><span class="line">        DruidDataSource dataSource &#x3D; new DruidDataSource();</span><br><span class="line">        dataSource.setDriverClassName(this.driverClassName);</span><br><span class="line">        dataSource.setUrl(this.url);</span><br><span class="line">        dataSource.setUsername(this.username);</span><br><span class="line">        dataSource.setPassword(this.password);</span><br><span class="line">        return dataSource;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>控制器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">package com.yang.demo.controller;</span><br><span class="line"></span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line">import org.springframework.stereotype.Controller;</span><br><span class="line">import org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line">import org.springframework.web.bind.annotation.ResponseBody;</span><br><span class="line"></span><br><span class="line">import javax.sql.DataSource;</span><br><span class="line"></span><br><span class="line">@Controller</span><br><span class="line">@RequestMapping(&quot;demo&quot;)</span><br><span class="line">public class DemoController &#123;</span><br><span class="line">    </span><br><span class="line">    @Autowired</span><br><span class="line">    private DataSource dataSource;</span><br><span class="line"></span><br><span class="line">    @RequestMapping(&quot;hello&quot;)</span><br><span class="line">    @ResponseBody</span><br><span class="line">    public String Hello()&#123;</span><br><span class="line">        return &quot;hello springboot!&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="SpringBoot配置类"><a href="#SpringBoot配置类" class="headerlink" title="SpringBoot配置类"></a>SpringBoot配置类</h3><p>接下来使用SpringBoot来进行连接池配置：</p>
+<p>思路：使用SpringBoot内置的属性配置文件，将读取属性的步骤单独抽取出来，达到复用的效果</p>
+<p><img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200126153106.png" srcset="/img/loading.gif" alt="img"></p>
+<p>属性配置文件：<code>application.properties</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">jdbc.driverClassName&#x3D;com.mysql.jdbc.Driver</span><br><span class="line">jdbc.url&#x3D;jdbc:mysql:&#x2F;&#x2F;&#x2F;speingboot</span><br><span class="line">jdbc.username&#x3D;root</span><br><span class="line">jdbc.password&#x3D;123456</span><br></pre></td></tr></table></figure>
+
+<p>读取属性的类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">package com.yang.demo.config;</span><br><span class="line"></span><br><span class="line">import org.springframework.boot.context.properties.ConfigurationProperties;</span><br><span class="line"></span><br><span class="line">@ConfigurationProperties(prefix &#x3D; &quot;jdbc&quot;) &#x2F;&#x2F;读取资源配置类中，前缀为jdbc的属性</span><br><span class="line">public class JdbcProperties &#123;</span><br><span class="line"></span><br><span class="line">    private String driverClassName;</span><br><span class="line">    private String url;</span><br><span class="line">    private String username;</span><br><span class="line">    private String password;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;getter setter</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>配置类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">package com.yang.demo.config;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">import com.alibaba.druid.pool.DruidDataSource;</span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line">import org.springframework.boot.context.properties.EnableConfigurationProperties;</span><br><span class="line">import org.springframework.context.annotation.Bean;</span><br><span class="line">import org.springframework.context.annotation.Configuration;</span><br><span class="line"></span><br><span class="line">import javax.sql.DataSource;</span><br><span class="line"></span><br><span class="line">@Configuration</span><br><span class="line">@EnableConfigurationProperties(JdbcProperties.class) &#x2F;&#x2F;启动资源配置读取类</span><br><span class="line">public class jdbcConfiguration &#123;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 方法1 @Autowired注入</span><br><span class="line">    @Autowired</span><br><span class="line">    private JdbcProperties jdbcProperties;</span><br><span class="line"></span><br><span class="line">    @Bean </span><br><span class="line">    public DataSource dataSource()&#123;</span><br><span class="line">        DruidDataSource dataSource &#x3D; new DruidDataSource();</span><br><span class="line">        dataSource.setDriverClassName(this.jdbcProperties.getDriverClassName());</span><br><span class="line">        dataSource.setUrl(this.jdbcProperties.getUrl());</span><br><span class="line">        dataSource.setUsername(this.jdbcProperties.getUsername());</span><br><span class="line">        dataSource.setPassword(this.jdbcProperties.getPassword());</span><br><span class="line">        return dataSource;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="属性注入的4种方法"><a href="#属性注入的4种方法" class="headerlink" title="属性注入的4种方法"></a>属性注入的4种方法</h3><p>上述配置类，使用@Autowired注入了属性，还可以采用其他方式注入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 方法1 @Autowired注入</span><br><span class="line">@Autowired</span><br><span class="line">private JdbcProperties jdbcProperties;</span><br><span class="line">&#x2F;&#x2F; 方法2 构造器参数注入</span><br><span class="line">private JdbcProperties jdbcProperties;</span><br><span class="line">public jdbcConfiguration(JdbcProperties jdbcProperties)&#123;</span><br><span class="line">    this.jdbcProperties &#x3D; jdbcProperties;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F; 方法3 作为形参注入</span><br><span class="line">@Bean</span><br><span class="line">public DataSource dataSource(JdbcProperties jdbcProperties)&#123;</span><br><span class="line">    DruidDataSource dataSource &#x3D; new DruidDataSource();</span><br><span class="line">    dataSource.setDriverClassName(jdbcProperties.getDriverClassName());</span><br><span class="line">    dataSource.setUrl(jdbcProperties.getUrl());</span><br><span class="line">    dataSource.setUsername(jdbcProperties.getUsername());</span><br><span class="line">    dataSource.setPassword(jdbcProperties.getPassword());</span><br><span class="line">    return dataSource;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F; 方法4 @Bean + @ConfigurationProperties</span><br><span class="line">@Configuration</span><br><span class="line">public class jdbcConfiguration &#123;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; 将jdbcProperties.java的ConfigurationProperties移动到此处</span><br><span class="line">    @Bean</span><br><span class="line">    @ConfigurationProperties(prefix &#x3D; &quot;jdbc&quot;) &#x2F;&#x2F;读取资源配置类中，前缀为jdbc的属性</span><br><span class="line">    public DataSource dataSource()&#123;</span><br><span class="line">        DruidDataSource dataSource &#x3D; new DruidDataSource();</span><br><span class="line">        return dataSource;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="自动配置原理"><a href="#自动配置原理" class="headerlink" title="自动配置原理"></a>自动配置原理</h2>
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+    <div id="tocbot"></div>
+  </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+  </div>
+</div>
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <i class="iconfont icon-love"></i>
+    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    <br>
+
+    
+  
+    <!-- 不蒜子统计PV -->
+    
+    &nbsp;<span id="busuanzi_container_site_pv">总访问量 
+          <span id="busuanzi_value_site_pv"></span> 次</span>&nbsp;
+  
+  
+    <!-- 不蒜子统计UV -->
+    
+    &nbsp;<span id="busuanzi_container_site_uv">总访客数 
+            <span id="busuanzi_value_site_uv"></span> 人</span>&nbsp;
+  
+  <br>
+
+
+
+    
+
+
+    <!-- cnzz Analytics icon -->
+    
+
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="/lib/jquery/jquery.min.js" ></script>
+<script src="/lib/popper/popper.min.js" ></script>
+<script src="/lib/bootstrap/js/bootstrap.min.js" ></script>
+<script src="/lib/mdbootstrap/js/mdb.min.js" ></script>
+<script src="/js/main.js" ></script>
+
+
+  <script src="/js/lazyload.js" ></script>
+
+
+
+  
+    <script src="/lib/tocbot/tocbot.min.js" ></script>
+  
+  <script src="/js/post.js" ></script>
+
+
+
+  <script src="/lib/smooth-scroll/smooth-scroll.min.js" ></script>
+
+
+
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+<!-- Plugins -->
+
+
+  
+
+  
+
+  
+
+  
+
+  <!-- cnzz Analytics -->
+  
+
+
+
+  <script src="/lib/prettify/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script src="/lib/typed/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "SpringBoot 入门&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script src="/lib/anchor/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "false",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script src="/lib/fancybox/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
