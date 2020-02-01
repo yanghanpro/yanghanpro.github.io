@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Spring 关于IOC, 小样~ Blog">
+    <meta name="keywords" content="Spring-IOC, 小样~ Blog">
     <meta name="description" content="关于IOC容器的一些总结~">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -13,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Spring 关于IOC | 小样~ Blog</title>
+    <title>Spring-IOC | 小样~ Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -308,7 +308,7 @@
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Spring 关于IOC</h1>
+                    <h1 class="description center-align post-title">Spring-IOC</h1>
                 </div>
             </div>
         </div>
@@ -713,7 +713,81 @@ AccountDao accountDao = StaticFactory.getAccount();</code></pre><p><img src="htt
 [AAA, BBB, CCC]
 [AAA, BBB, CCC]
 {testA=aaa, testB=bbb}
-{testD=ddd, testC=ccc}</code></pre>
+{testD=ddd, testC=ccc}</code></pre><h2 id="注解"><a href="#注解" class="headerlink" title="注解"></a>注解</h2><p>(1) . 注解汇总</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>注解版</th>
+<th>xml文件版</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>创建对象</td>
+<td>@Component (value=”beanID”)<br />@Repository <br />@Service<br />@Controller<br /></td>
+<td><code>&lt;bean id=&quot;beanID&quot; class=&quot;xxx&quot;&gt;&lt;/bean&gt;</code></td>
+</tr>
+<tr>
+<td>注入数据+对象</td>
+<td>注入bean对象<br />@Autowired<br />@Qualifier (value = “beanID”)<br />@Resource (name=”beanID”)<br />注入基本类型和String类型数据<br />@Value</td>
+<td><code>&lt;property id=&quot;&quot; ref=&quot;&quot;&gt;&lt;/property&gt;</code><br /><code>&lt;property id=&quot;&quot; value=&quot;&quot;&gt;&lt;/property&gt;</code></td>
+</tr>
+<tr>
+<td>改变作用范围</td>
+<td>@Scope</td>
+<td><code>&lt;bean id=&quot;beanName&quot; class=&quot;xxx&quot; scope=&quot;prototype&quot;&gt;&lt;/bean&gt;</code></td>
+</tr>
+<tr>
+<td>生命周期</td>
+<td>@PostConstruct：指定初始化方法<br />@PreDestroy：指定销毁方法</td>
+<td><code>&lt;bean id=&quot;beanName&quot; class=&quot;xxx&quot; init-method=&quot;&quot; destroy-method=&quot;&quot;&gt;&lt;/bean&gt;</code></td>
+</tr>
+</tbody></table>
+<p>@Autowired</p>
+<p>作用：自动按照类型注入</p>
+<p>若IOC容器中有唯一bean对象和要注入的对象类型相匹配，则注入成功</p>
+<p>若有多个，则先匹配对象类型，在匹配bean名  </p>
+<p>@Qualifier (value = “beanId”)</p>
+<p>作用：在按照类型注入的基础上，再按照名称注入</p>
+<p>注意：在给类成员注入时无法单独使用，在给方法参数注入时可以单独使用</p>
+<p>@Resource (name=”beanId”)</p>
+<p>作用：直接按照bean的id注入，可独立使用</p>
+<p>@Value</p>
+<p>作用：注入基本类型和String类型数据</p>
+<p>属性：</p>
+<blockquote>
+<p>value：指定数据的值，可以使用spring的SpEL（spring中的el表达式）</p>
+<p>spEL写法：${表达式}</p>
+</blockquote>
+<p>(2)  案例</p>
+<p><img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200131151851.png" alt=""></p>
+<h2 id="注解-配置类"><a href="#注解-配置类" class="headerlink" title="注解 配置类"></a>注解 配置类</h2><p>配置文件可以使用配置类代替，取消使用xml配置文件，改而使用纯注解。这是springboot中常见的配置手段。</p>
+<blockquote>
+<p>配置类的注解：</p>
+<p>@Configuration：</p>
+<blockquote>
+<p> 指定当前类是一个配置类（配置文件）</p>
+</blockquote>
+<p>@ComponentScan (basePackages=”xxx”)</p>
+<blockquote>
+<p>指定spring注解在创建容器时要扫描的包</p>
+</blockquote>
+<p>@Import (value=xxxconfig.class)</p>
+<blockquote>
+<p>导入其他配置类</p>
+</blockquote>
+<p>@Bean (name=”beanID”)</p>
+<blockquote>
+<p>把当前方法的返回值作为bean对象存入spring的ioc容器中，beanID默认是方法名</p>
+<p>注意：当我们使用Bean注解配置方法时，若方法有参数，spring框架回去容器中查找有没有可用的bean对象。查找的方式和@Autowired一致。</p>
+</blockquote>
+<p>@PropertySource (“classpath:db.properties”)</p>
+<blockquote>
+<p>指定properties文件的位置</p>
+</blockquote>
+</blockquote>
+<p><img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200131221427.png" alt=""></p>
+
             </div>
             <hr/>
 
@@ -947,29 +1021,28 @@ AccountDao accountDao = StaticFactory.getAccount();</code></pre><p><img src="htt
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/01/30/Spring-IOC/">
+                <a href="/2020/02/01/Spring-AOP/">
                     <div class="card-image">
                         
-                        <img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/912ca1037d926aeacf54c3b0724f385b_SouthEast.png" class="responsive-img" alt="Spring 关于IOC">
+                        <img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/912ca1037d926aeacf54c3b0724f385b_SouthEast.png" class="responsive-img" alt="Spring-AOP">
                         
-                        <span class="card-title">Spring 关于IOC</span>
+                        <span class="card-title">Spring-AOP</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            关于IOC容器的一些总结~
+                            关于AOP的一些总结~
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-01-30
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-02-01
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -982,7 +1055,6 @@ AccountDao accountDao = StaticFactory.getAccount();</code></pre><p><img src="htt
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
@@ -990,8 +1062,8 @@ AccountDao accountDao = StaticFactory.getAccount();</code></pre><p><img src="htt
                         <span class="chip bg-color">Spring</span>
                     </a>
                     
-                    <a href="/tags/IOC%E5%AE%B9%E5%99%A8/">
-                        <span class="chip bg-color">IOC容器</span>
+                    <a href="/tags/AOP/">
+                        <span class="chip bg-color">AOP</span>
                     </a>
                     
                 </div>
