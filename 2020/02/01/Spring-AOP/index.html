@@ -303,7 +303,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/912ca1037d926aeacf54c3b0724f385b_SouthEast.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -441,8 +441,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/Java%E6%A1%86%E6%9E%B6/" class="post-category">
-                                Java框架
+                            <a href="/categories/Spring%E6%A1%86%E6%9E%B6/" class="post-category">
+                                Spring框架
                             </a>
                         
                     </div>
@@ -471,7 +471,7 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="AOP概述"><a href="#AOP概述" class="headerlink" title="AOP概述"></a>AOP概述</h1><h1 id="一、AOP概述"><a href="#一、AOP概述" class="headerlink" title="一、AOP概述"></a>一、AOP概述</h1><h3 id="1-什么是AOP？"><a href="#1-什么是AOP？" class="headerlink" title="1. 什么是AOP？"></a>1. 什么是AOP？</h3><blockquote>
+                <h1 id="一、AOP概述"><a href="#一、AOP概述" class="headerlink" title="一、AOP概述"></a>一、AOP概述</h1><h3 id="1-什么是AOP？"><a href="#1-什么是AOP？" class="headerlink" title="1. 什么是AOP？"></a>1. 什么是AOP？</h3><blockquote>
 <p>AOP，Aspect Oriented Programming，面向切面编程</p>
 <p>AOP把程序中重复的代码抽取出来，在需要执行时，使用动态代理技术，在不修改源码的基础上，对已有方法进行增强</p>
 </blockquote>
@@ -542,7 +542,7 @@
 <p>类或接口中所有的方法都叫连接点，被增强的方法叫切入点</p>
 <p><strong>切入点一定是连接点，但连接点不一定是切入点</strong></p>
 </blockquote>
-<h1 id="三、AOP案例"><a href="#三、AOP案例" class="headerlink" title="三、AOP案例"></a>三、AOP案例</h1><h4 id="0-项目结构"><a href="#0-项目结构" class="headerlink" title="(0).  项目结构"></a>(0).  项目结构</h4><p><img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200201171424.png" alt=""></p>
+<h1 id="三、AOP案例（4种通知）"><a href="#三、AOP案例（4种通知）" class="headerlink" title="三、AOP案例（4种通知）"></a>三、AOP案例（4种通知）</h1><h4 id="0-项目结构"><a href="#0-项目结构" class="headerlink" title="(0).  项目结构"></a>(0).  项目结构</h4><p><img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200201171424.png" alt=""></p>
 <h4 id="1-导入依赖"><a href="#1-导入依赖" class="headerlink" title="(1).  导入依赖"></a>(1).  导入依赖</h4><pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-context<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
@@ -577,7 +577,36 @@
         <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
-<h4 id="4-spring配置文件"><a href="#4-spring配置文件" class="headerlink" title="(4).  spring配置文件"></a>(4).  spring配置文件</h4><pre class=" language-xml"><code class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?></span>
+<h4 id="4-通知类"><a href="#4-通知类" class="headerlink" title="(4).  通知类"></a>(4).  通知类</h4><pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>yang<span class="token punctuation">.</span>utils<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+ * 用于记录日志的工具类，提供了公共的代码
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Logger</span> <span class="token punctuation">{</span>
+
+    <span class="token comment" spellcheck="true">// 打印日志，</span>
+
+    <span class="token comment" spellcheck="true">// 前置通知：在切入点方法执行前执行（切入点方法：业务层方法）</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">beforePrintLog</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Logger类的BeforePrintLog方法---开始记录日志~"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">// 后置通知：在切入点方法执行后执行（切入点方法：业务层方法）</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">afterReturningPrintLog</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Logger类的AfterReturningPrintLog方法---开始记录日志~"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">// 异常通知：在切入点方法执行前执行（切入点方法：业务层方法）</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">afterThrowingPrintLog</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Logger类的AfterPrintLog方法---开始记录日志~"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">// 最终通知：在切入点方法执行前执行（切入点方法：业务层方法）</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">afterPrintLog</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Logger类的AfterPrintLog方法---开始记录日志~"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<h4 id="5-spring配置文件"><a href="#5-spring配置文件" class="headerlink" title="(5).  spring配置文件"></a>(5).  spring配置文件</h4><pre class=" language-xml"><code class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>beans</span> <span class="token attr-name">xmlns</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>http://www.springframework.org/schema/beans<span class="token punctuation">"</span></span>
        <span class="token attr-name"><span class="token namespace">xmlns:</span>xsi</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>http://www.w3.org/2001/XMLSchema-instance<span class="token punctuation">"</span></span>
        <span class="token attr-name"><span class="token namespace">xmlns:</span>aop</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>http://www.springframework.org/schema/aop<span class="token punctuation">"</span></span>
@@ -592,14 +621,19 @@
     <span class="token comment" spellcheck="true">&lt;!-- 配置AOP
         1. 把通知Bean交给spring管理：Logger类
         2. 使用aop:config标签: 表明开始AOP的配置
-           使用aop:aspect标签: 表明配置切面
+           (1)使用aop:aspect标签: 表明配置切面
                 id: 切面的唯一标识
                 ref: 指定通知类的beanid
-           使用对应标签配置通知类型
-                aop:before标签: 配置前置通知
-                aop:after标签: 配置后置通知
+           (2)使用对应标签配置通知类型
+                aop:before标签: 配置前置通知，在切入点方法执行之前执行
+                aop:after-returning标签: 配置后置通知，在切入点方法正常执行之后执行，它和异常通知只能执行一个 
+                aop:after-throwing标签: 配置异常通知，在切入点方法产生异常之后执行，它和后置通知只能执行一个
+                aop:after标签: 配置最终通知，在切入点方法是否正常执行都会在其后执行 
                     method属性: 指定通知类中哪个方法是前置通知
                     pointcut属性: 指定切入点表达式，对业务层中哪些方法进行增强
+           (3)使用aop:pointcut标签：配置切入点表达式
+                写在aop:aspect内部时，只能当前切面使用
+                写在aop:aspect外部时，所有切面均可使用【注意：必须写在aop:aspect标签前面才可读取到】
     --></span>
 
     <span class="token comment" spellcheck="true">&lt;!--  配置通知类--></span>
@@ -607,13 +641,31 @@
 
     <span class="token comment" spellcheck="true">&lt;!-- 配置AOP --></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">aop:</span>config</span><span class="token punctuation">></span></span>
+        <span class="token comment" spellcheck="true">&lt;!-- 配置切入点表达式：id指定表达式的唯一标识，expression指定表达式内容 --></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">aop:</span>pointcut</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>pt1<span class="token punctuation">"</span></span> <span class="token attr-name">expression</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>execution(* com.yang.service.impl.*.*(..))<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">aop:</span>aspect</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>logAdvice<span class="token punctuation">"</span></span> <span class="token attr-name">ref</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>logger<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">aop:</span>before</span> <span class="token attr-name">method</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>printLog<span class="token punctuation">"</span></span> <span class="token attr-name">pointcut</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>execution(* com.yang.service.impl.*.*(..))<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">aop:</span>before</span><span class="token punctuation">></span></span>
+            <span class="token comment" spellcheck="true">&lt;!-- 配置前置通知 --></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">aop:</span>before</span> <span class="token attr-name">method</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>beforePrintLog<span class="token punctuation">"</span></span> <span class="token attr-name">pointcut-ref</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>pt1<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">aop:</span>before</span><span class="token punctuation">></span></span>
+            <span class="token comment" spellcheck="true">&lt;!-- 配置后置通知--></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">aop:</span>after-returning</span> <span class="token attr-name">method</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>afterReturningPrintLog<span class="token punctuation">"</span></span> <span class="token attr-name">pointcut-ref</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>pt1<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">aop:</span>after-returning</span><span class="token punctuation">></span></span>
+            <span class="token comment" spellcheck="true">&lt;!-- 配置异常通知 --></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">aop:</span>after-throwing</span> <span class="token attr-name">method</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>afterThrowingPrintLog<span class="token punctuation">"</span></span> <span class="token attr-name">pointcut-ref</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>pt1<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">aop:</span>after-throwing</span><span class="token punctuation">></span></span>
+            <span class="token comment" spellcheck="true">&lt;!-- 配置最终通知 --></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">aop:</span>after</span> <span class="token attr-name">method</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>afterPrintLog<span class="token punctuation">"</span></span> <span class="token attr-name">pointcut-ref</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>pt1<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">aop:</span>after</span><span class="token punctuation">></span></span>
+
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">aop:</span>aspect</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">aop:</span>config</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>beans</span><span class="token punctuation">></span></span></code></pre>
-<p>切入点表达式</p>
-<pre><code>格式：execution(表达式)
+<img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200201174330.png" style="zoom:67%;" />
+
+
+
+<img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200201174608.png" style="zoom:67%;" />
+
+
+
+<h5 id="切入点表达式"><a href="#切入点表达式" class="headerlink" title="切入点表达式"></a>切入点表达式</h5><pre><code>格式：execution(表达式)
 标准写法：【访问修饰符可省略】
     public void com.demo.service.impl.XxxServiceImpl.xxXXX()
 
@@ -639,7 +691,7 @@
 
 (5).全通配写法：* *..*.*(..) 
 
-实际项目开发中，一般切到业务层下的所有方法</code></pre><h4 id="5-测试类"><a href="#5-测试类" class="headerlink" title="(5).  测试类"></a>(5).  测试类</h4><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">AOPTest</span> <span class="token punctuation">{</span>
+实际项目开发中，一般切到业务层下的所有方法</code></pre><h4 id="6-测试类"><a href="#6-测试类" class="headerlink" title="(6).  测试类"></a>(6).  测试类</h4><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">AOPTest</span> <span class="token punctuation">{</span>
     <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
         ApplicationContext context <span class="token operator">=</span>
                 <span class="token keyword">new</span> <span class="token class-name">ClassPathXmlApplicationContext</span><span class="token punctuation">(</span><span class="token string">"applicationContext.xml"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -650,8 +702,21 @@
 
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
-<h4 id="6-输出结果"><a href="#6-输出结果" class="headerlink" title="(6).  输出结果"></a>(6).  输出结果</h4><img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200201171826.png" style="zoom:67%;" />
+<h4 id="7-输出结果"><a href="#7-输出结果" class="headerlink" title="(7).  输出结果"></a>(7).  输出结果</h4><img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200201175650.png" style="zoom:67%;" />
 
+
+
+
+
+
+
+
+
+<h1 id="四、AOP案例（环绕通知）"><a href="#四、AOP案例（环绕通知）" class="headerlink" title="四、AOP案例（环绕通知）"></a>四、AOP案例（环绕通知）</h1><h1 id="五、基于注解的AOP案例"><a href="#五、基于注解的AOP案例" class="headerlink" title="五、基于注解的AOP案例"></a>五、基于注解的AOP案例</h1><h3 id="注解-XML文件配置AOP"><a href="#注解-XML文件配置AOP" class="headerlink" title="注解 + XML文件配置AOP"></a>注解 + XML文件配置AOP</h3><p><img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200202090207.png" alt=""></p>
+<p>需要注意的是，注意配置的后置通知或异常通知是在最终通知之后的。</p>
+<p>而使用环绕通知的话，则是正常顺序。</p>
+<p><font color="red">因此注解配置AOP一般使用环绕通知</font></p>
+<h3 id="纯注解配置AOP"><a href="#纯注解配置AOP" class="headerlink" title="纯注解配置AOP"></a>纯注解配置AOP</h3><p><img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200202091426.png" alt=""></p>
 
             </div>
             <hr/>
@@ -886,42 +951,41 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/02/01/Spring-AOP/">
+                <a href="/2020/02/02/Spring-JdbcTemplate/">
                     <div class="card-image">
                         
-                        <img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/912ca1037d926aeacf54c3b0724f385b_SouthEast.png" class="responsive-img" alt="Spring-AOP">
                         
-                        <span class="card-title">Spring-AOP</span>
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="Spring-JdbcTemplate">
+                        
+                        <span class="card-title">Spring-JdbcTemplate</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            关于AOP的一些总结~
+                            关于JdbcTemplate的一些总结~
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-02-01
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-02-02
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Java%E6%A1%86%E6%9E%B6/" class="post-category">
-                                    Java框架
+                            <a href="/categories/Spring%E6%A1%86%E6%9E%B6/" class="post-category">
+                                    Spring框架
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
@@ -929,8 +993,8 @@
                         <span class="chip bg-color">Spring</span>
                     </a>
                     
-                    <a href="/tags/AOP/">
-                        <span class="chip bg-color">AOP</span>
+                    <a href="/tags/JdbcTemplate/">
+                        <span class="chip bg-color">JdbcTemplate</span>
                     </a>
                     
                 </div>
@@ -947,7 +1011,8 @@
                 <a href="/2020/01/30/Spring-IOC/">
                     <div class="card-image">
                         
-                        <img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/912ca1037d926aeacf54c3b0724f385b_SouthEast.png" class="responsive-img" alt="Spring-IOC">
+                        
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="Spring-IOC">
                         
                         <span class="card-title">Spring-IOC</span>
                     </div>
@@ -966,8 +1031,8 @@
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Java%E6%A1%86%E6%9E%B6/" class="post-category">
-                                    Java框架
+                            <a href="/categories/Spring%E6%A1%86%E6%9E%B6/" class="post-category">
+                                    Spring框架
                                 </a>
                             
                             
