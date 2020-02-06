@@ -5,15 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="设计模式 代理模式, 小样~ Blog">
-    <meta name="description" content="静态代理1. 静态代理的优劣优点：
-
-可以使真实角色（被代理角色）的操作更加纯粹，不用关注一些公共的业务
-将公共业务交给代理角色，实现业务分工
-公共业务发生扩展时，方便集中管理
-
-缺点：
-
-一个真实角色（被代理角色）就会产生一个代理角色，代">
+    <meta name="description" content="关于动态代理">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -431,12 +423,29 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
+                                <span class="chip bg-color">Java设计模式</span>
+                            </a>
+                        
+                            <a href="/tags/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/">
+                                <span class="chip bg-color">动态代理</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-category">
+                                Java设计模式
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -513,7 +522,7 @@
         houseProxy<span class="token punctuation">.</span><span class="token function">rent</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
-<h2 id="静态代理（加深理解）"><a href="#静态代理（加深理解）" class="headerlink" title="静态代理（加深理解）"></a>静态代理（加深理解）</h2><h3 id="1-导读"><a href="#1-导读" class="headerlink" title="1. 导读"></a>1. 导读</h3><p>当一个Service中的每个方法都需要加上业务细节处理（如计算运行时间）时，如果将这些代码直接添加在每个方法中，无疑会降低代码的可读性，甚至还会导致代码出现问题。</p>
+<h4 id="5-输出结果"><a href="#5-输出结果" class="headerlink" title="(5) 输出结果"></a>(5) 输出结果</h4><pre><code>房东正在出租房屋...</code></pre><h2 id="静态代理（加深理解）"><a href="#静态代理（加深理解）" class="headerlink" title="静态代理（加深理解）"></a>静态代理（加深理解）</h2><h3 id="1-导读"><a href="#1-导读" class="headerlink" title="1. 导读"></a>1. 导读</h3><p>当一个Service中的每个方法都需要加上业务细节处理（如计算运行时间）时，如果将这些代码直接添加在每个方法中，无疑会降低代码的可读性，甚至还会导致代码出现问题。</p>
 <p>因此，我们需要在不修改代码的基础上，使用代理来添加这些和业务不相干的代码。</p>
 <h3 id="2-实例-1"><a href="#2-实例-1" class="headerlink" title="2. 实例"></a>2. 实例</h3><img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200203083140.png" style="zoom:67%;" />
 
@@ -586,6 +595,10 @@
         proxy<span class="token punctuation">.</span><span class="token function">delete</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
+<h4 id="5-输出结果-1"><a href="#5-输出结果-1" class="headerlink" title="(5) 输出结果"></a>(5) 输出结果</h4><pre class=" language-java"><code class="language-java"><span class="token punctuation">[</span>debug<span class="token punctuation">]</span> 使用了add方法
+增加了一个用户<span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">[</span>debug<span class="token punctuation">]</span> 使用了delete方法
+删除了一个用户<span class="token punctuation">.</span><span class="token punctuation">.</span></code></pre>
 <h2 id="动态代理"><a href="#动态代理" class="headerlink" title="动态代理"></a>动态代理</h2><p>静态代理在不修改代码的情况下进行了纵向开发，但是有一个缺点：</p>
 <blockquote>
 <p>一个 “被代理角色” 就会对应产生一个 “代理角色”</p>
@@ -668,7 +681,10 @@
         proxy<span class="token punctuation">.</span><span class="token function">delete</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
-
+<h4 id="3-输出结果"><a href="#3-输出结果" class="headerlink" title="(3)  输出结果"></a>(3)  输出结果</h4><pre><code>[DEBUG] 执行了add方法...
+增加了一个用户..
+[DEBUG] 执行了delete方法...
+删除了一个用户..</code></pre>
             </div>
             <hr/>
 
@@ -683,7 +699,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://yoursite.com" rel="external nofollow noreferrer">Orbit</a>
+                    <a href="http://yoursite.com" rel="external nofollow noreferrer">杨涵</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -706,7 +722,7 @@
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="http://yoursite.com" target="_blank">Orbit</a>
+                    <a href="http://yoursite.com" target="_blank">杨涵</a>
                     !
                 </span>
             </div>
@@ -730,7 +746,15 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/Java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
+                                    <span class="chip bg-color">Java设计模式</span>
+                                </a>
+                            
+                                <a href="/tags/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/">
+                                    <span class="chip bg-color">动态代理</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -894,38 +918,29 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/02/03/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/">
+                <a href="/2020/02/04/Java-%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="设计模式 代理模式">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="Java 网络编程">
                         
-                        <span class="card-title">设计模式 代理模式</span>
+                        <span class="card-title">Java 网络编程</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            静态代理1. 静态代理的优劣优点：
-
-可以使真实角色（被代理角色）的操作更加纯粹，不用关注一些公共的业务
-将公共业务交给代理角色，实现业务分工
-公共业务发生扩展时，方便集中管理
-
-缺点：
-
-一个真实角色（被代理角色）就会产生一个代理角色，代
+                            
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-02-03
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-02-04
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -934,7 +949,6 @@
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
@@ -957,7 +971,24 @@
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            集合框架的概述(1) 集合集合和数组都是对多个数据进行存储操作（存入内存，即暂存）的结构，成为Java容器
+(2)  集合与数组
+
+
+
+集合
+数组
+
+
+
+长度
+可变
+固定
+
+
+元素类型
+可以多类型共存
+不可变，类型单一，如String[ ]
                         
                     </div>
                     <div class="publish-info">

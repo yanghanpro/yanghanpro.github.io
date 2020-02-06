@@ -5,7 +5,24 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="Java-集合框架(1), 小样~ Blog">
-    <meta name="description" content="Java-集合框架(1) | 小样~ Blog">
+    <meta name="description" content="集合框架的概述(1) 集合集合和数组都是对多个数据进行存储操作（存入内存，即暂存）的结构，成为Java容器
+(2)  集合与数组
+
+
+
+集合
+数组
+
+
+
+长度
+可变
+固定
+
+
+元素类型
+可以多类型共存
+不可变，类型单一，如String[ ]">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -454,7 +471,314 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <h2 id="集合框架的概述"><a href="#集合框架的概述" class="headerlink" title="集合框架的概述"></a>集合框架的概述</h2><h3 id="1-集合"><a href="#1-集合" class="headerlink" title="(1) 集合"></a>(1) 集合</h3><p>集合和数组都是对多个数据进行存储操作（存入内存，即暂存）的结构，成为Java容器</p>
+<h3 id="2-集合与数组"><a href="#2-集合与数组" class="headerlink" title="(2)  集合与数组"></a>(2)  集合与数组</h3><table>
+<thead>
+<tr>
+<th></th>
+<th>集合</th>
+<th>数组</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>长度</td>
+<td>可变</td>
+<td>固定</td>
+</tr>
+<tr>
+<td>元素类型</td>
+<td>可以多类型共存</td>
+<td>不可变，类型单一，如String[ ]  arr1,  int[ ]  arr2， Object arr3[ ]</td>
+</tr>
+<tr>
+<td>增删改操作</td>
+<td>ArrayList:查找快，增删慢<br />LinkedList:增删快，查找慢</td>
+<td>不方便，一旦数组满了，增操作就需要创建一个新数组</td>
+</tr>
+<tr>
+<td>存储特点</td>
+<td>List:有序，可重复<br />set:无序，不可重复</td>
+<td>有序，可重复</td>
+</tr>
+</tbody></table>
+<h3 id="3-集合框架体系"><a href="#3-集合框架体系" class="headerlink" title="(3) 集合框架体系"></a>(3) 集合框架体系</h3><p><img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200203105419.png" alt=""></p>
+<p><img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200203161221.png" alt=""></p>
+<p><img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200203161251.png" alt=""></p>
+<h2 id="Collection接口的常用方法"><a href="#Collection接口的常用方法" class="headerlink" title="Collection接口的常用方法"></a>Collection接口的常用方法</h2><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>add (Object obj)</td>
+<td>添加obj元素到集合中</td>
+<td></td>
+</tr>
+<tr>
+<td>size ()</td>
+<td>获取集合元素个数</td>
+<td></td>
+</tr>
+<tr>
+<td>addAll (Collection coll)</td>
+<td>将集合coll添加到当前集合中</td>
+<td></td>
+</tr>
+<tr>
+<td>clear ()</td>
+<td>清空集合所有元素</td>
+<td></td>
+</tr>
+<tr>
+<td>isEmpty ()</td>
+<td>判断集合是否为空</td>
+<td></td>
+</tr>
+<tr>
+<td>contains (Object obj)</td>
+<td>判断集合是否包含obj对象</td>
+<td>底层是调用obj对象的equals( )<br />如果equals ()未重写返回false<br />如果equals ()已重写返回true</td>
+</tr>
+<tr>
+<td>containsAll(Collection coll)</td>
+<td>判断集合coll所有元素是否都存在于当前集合中</td>
+<td></td>
+</tr>
+<tr>
+<td>remove(Object obj)</td>
+<td>移除当前集合中的obj元素</td>
+<td>删除成功返回true<br />若无该元素返回false</td>
+</tr>
+<tr>
+<td>removeAll(Collection coll)</td>
+<td>移除当前集合中与coll包含的所有元素（移除交集，保留差集）</td>
+<td></td>
+</tr>
+<tr>
+<td>retainAll(Collection coll)</td>
+<td>保留当前集合中与coll包含的所有元素（保留交集，移除差集）</td>
+<td></td>
+</tr>
+<tr>
+<td>equals(Collection coll)</td>
+<td>判断当前集合和coll集合的元素是否相同</td>
+<td>如果是List（有序），位置也需要相同</td>
+</tr>
+<tr>
+<td>hashCode()</td>
+<td>返回该集合的哈希值</td>
+<td></td>
+</tr>
+<tr>
+<td>toArray()</td>
+<td>集合转换为数组</td>
+<td>Arrays.asList()：数组转换为集合</td>
+</tr>
+<tr>
+<td>Iterator iterator()</td>
+<td>迭代器，遍历集合元素</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="遍历集合的方法"><a href="#遍历集合的方法" class="headerlink" title="遍历集合的方法"></a>遍历集合的方法</h3><h4 id="1-Iterator接口"><a href="#1-Iterator接口" class="headerlink" title="(1)  Iterator接口"></a>(1)  Iterator接口</h4><p>Iterator对象称为迭代器(设计模式的一种)，主要用于遍历 Collection 集合中的元素（无法遍历Map集合）</p>
+<p>Collection接口继承了java.lang.Iterable接口，该接口有一个iterator()方法，那么所有实现了Collection接口的集合类都有一个iterator()方法，用以返回一个实现了Iterator接口的对象。</p>
+<p>集合对象每次调用iterator()方法都得到一个全新的迭代器对象，默认游标都在集合的第一个元素之前。</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>boolean  hasNext()</td>
+<td>判断是否还有元素</td>
+</tr>
+<tr>
+<td>Object next()</td>
+<td>返回下一个元素</td>
+</tr>
+<tr>
+<td>void remove()</td>
+<td>在遍历集合时移除指定元素</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>注意：如果还未调用next()或在上一次调用 next 方法之后已经调用了 remove 方法，再调用remove都会报IllegalStateException</p>
+<p>还未调用next()就调用remove()：如果游标在第一个，没有指向下一个，那remove的就是空的元素了）</p>
+<p>上一次调用 next 方法之后已经调用了 remove 方法，再调用remove元素已经移除了，无法再次移除</p>
+</blockquote>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">iteratorDemo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    Collection coll <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    coll<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">"AA"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    coll<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">123</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 自动装箱</span>
+    coll<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    coll<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>iterator<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>iterator<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>iterator<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>iterator<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>iterator<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 没有元素，报异常：NoSuchElementException</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>iterator<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+    Iterator iterator <span class="token operator">=</span> coll<span class="token punctuation">.</span><span class="token function">iterator</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 方式1</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span> coll<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>iterator<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">// 方式2（常用）</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>iterator<span class="token punctuation">.</span><span class="token function">hasNext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>iterator<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+
+
+    <span class="token comment" spellcheck="true">/*    
+    // 错误写法，每次调用iterator()都会产生一个新对象，这会导致死循环
+    while (coll.iterator().hasNext()){
+        System.out.println(coll.iterator().next());
+    }
+    */</span>
+    <span class="token comment" spellcheck="true">// remove()测试</span>
+    Iterator iter <span class="token operator">=</span> coll<span class="token punctuation">.</span><span class="token function">iterator</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//回到起点</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span>iter<span class="token punctuation">.</span><span class="token function">hasNext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            Object obj <span class="token operator">=</span> iter<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>obj<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span><span class="token string">"Tom"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            iter<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200203161456.png" style="zoom: 50%;" />
+
+
+
+
+
+<h4 id="2-foreach-增强for循环"><a href="#2-foreach-增强for循环" class="headerlink" title="(2)  foreach / 增强for循环"></a>(2)  foreach / 增强for循环</h4><p>Java 5.0 提供了 foreach 循环迭代访问 Collection和数组。</p>
+<p>foreach可以用来遍历数组和集合。</p>
+<p>遍历操作不需获取Collection或数组的长度，无需使用索引访问元素。</p>
+<p>遍历集合的底层仍然时调用Iterator迭代器完成操作。</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">iteratorDemo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    Collection coll <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        coll<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">"AA"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        coll<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">123</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 自动装箱</span>
+        coll<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        coll<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 遍历集合</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span>Object obj <span class="token operator">:</span> coll<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>obj<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">// 遍历数组</span>
+    <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> arr <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">:</span> arr<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<h4 id="3-foreach面试题"><a href="#3-foreach面试题" class="headerlink" title="(3)  foreach面试题"></a>(3)  foreach面试题</h4><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">Demo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    String<span class="token punctuation">[</span><span class="token punctuation">]</span> arr <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">(</span><span class="token string">"MM"</span><span class="token punctuation">,</span><span class="token string">"MM"</span><span class="token punctuation">.</span><span class="token string">"MM"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// 使用普通for循环</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">&lt;</span>arr<span class="token punctuation">.</span>length<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">=</span><span class="token string">"GG"</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>arr<span class="token punctuation">.</span>length<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/*------------------------------------*/</span>
+
+    <span class="token comment" spellcheck="true">// 使用增强for循环遍历</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span>String i <span class="token operator">:</span> arr<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        i<span class="token operator">=</span><span class="token string">"GG"</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>arr<span class="token punctuation">.</span>length<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<pre><code>输出结果：
+GG GG GG
+MM MM MM</code></pre><pre><code>为什么？
+因为普通for循环是直接对arr[i]进行操作，
+而增强for循环是取出arr[i],将arr[i]赋值给String s,修改时只是修改了引用，但是没有修改数组元素的值。</code></pre><h2 id="List接口（Since-1-2）"><a href="#List接口（Since-1-2）" class="headerlink" title="List接口（Since 1.2）"></a>List接口（Since 1.2）</h2><p>特点：元素有序，可重复 ——-&gt; ”动态数组“，本质是创建新数组，替换旧数组</p>
+<h3 id="1-List接口的三个实现类"><a href="#1-List接口的三个实现类" class="headerlink" title="(1)  List接口的三个实现类"></a>(1)  List接口的三个实现类</h3><blockquote>
+<p>ArrayList：（Since 1.2）使用数组Obect[]存储，查询快，增删慢，线程不安全，效率高</p>
+<p>LinkedList：（Since 1.2）使用双向链表存储，查询慢，增删快</p>
+<p>Vector：（Since 1.0）使用数组Obect[]存储，查询快，增删慢，线程安全，效率低</p>
+</blockquote>
+<p><strong>三者异同点（面试题）</strong></p>
+<blockquote>
+<p>相同点：都实现了List接口，存储的数据都是有序可重复的。</p>
+<p>不同点：见上</p>
+</blockquote>
+<h3 id="2-List接口的常用方法"><a href="#2-List接口的常用方法" class="headerlink" title="(2)   List接口的常用方法"></a>(2)   List接口的常用方法</h3><p>因为List有索引的概念（Set没有），因此除了Collection那些方法之外，List还有与索引相关的方法。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>插入元素</td>
+<td>void  add(int index,Object ele)</td>
+<td>在index位置插入ele元素</td>
+</tr>
+<tr>
+<td>插入集合</td>
+<td>boolean addAll(int index,Collection coll)</td>
+<td>从index位置开始将coll集合中的所有元素添加进来</td>
+</tr>
+<tr>
+<td>获取元素</td>
+<td>Object get(int index)</td>
+<td>获取指定index位置的元素</td>
+</tr>
+<tr>
+<td>查找索引</td>
+<td>int indexOf(Object obj)</td>
+<td>返回元素obj在集合中首次出现的位置</td>
+</tr>
+<tr>
+<td>查找索引</td>
+<td>int lastIndexOf(Object obj)</td>
+<td>返回元素obj在集合中末次出现的位置</td>
+</tr>
+<tr>
+<td>移除元素</td>
+<td>Object remove(int index)</td>
+<td>移除index位置的元素，并返回index元素</td>
+</tr>
+<tr>
+<td>覆盖元素</td>
+<td>Object set(int index,Object obj)</td>
+<td>设定index位置的元素为obj</td>
+</tr>
+<tr>
+<td>截取集合</td>
+<td>List  subList(int fromIndex, int toIndex)</td>
+<td>返回从fromIndex到toIndex位置的子集合</td>
+</tr>
+</tbody></table>
+<p>Arrays.asList(…) 方法返回的 List 集合，既不是 ArrayList 实例，也不是Vector 实例。 Arrays.asList(…) 返回值是一个固定长度的 List 集合</p>
+<h2 id="Set接口"><a href="#Set接口" class="headerlink" title="Set接口"></a>Set接口</h2><p>无序，不可重复</p>
+<blockquote>
+<p>无序性：是根据哈希值进行排序的（hashMap的key的排列规则），而不是按照存储顺序进行排序的。</p>
+<p>不可重复性：计算新添加的对象的哈希值，若哈希值和已有元素的哈希值一样，再使用equals()进行比较，返回false就是没有重复。</p>
+</blockquote>
+<p>Set接口是Collection的子接口，set接口没有提供额外的方法<br>Set 集合不允许包含相同的元素，如果试把两个相同的元素加入同一个Set 集合中，则添加操作失败。<br>Set 判断两个对象是否相同不是使用 == 运算符，而是根据 对象的equals() 方法</p>
+<h3 id="Set接口的三个实现类"><a href="#Set接口的三个实现类" class="headerlink" title="Set接口的三个实现类"></a>Set接口的三个实现类</h3><p>HashSet：线程不安全，可以存储null值，底层是数组实现的。</p>
+<p>​    LinkedHashSet：HashSet的子类，遍历数据时，可以按照添加的顺序遍历</p>
+<p>TreeSet：可以按照添加对象的指定属性，进行排序</p>
+
             </div>
             <hr/>
 
@@ -696,15 +1020,7 @@
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            静态代理1. 静态代理的优劣优点：
-
-可以使真实角色（被代理角色）的操作更加纯粹，不用关注一些公共的业务
-将公共业务交给代理角色，实现业务分工
-公共业务发生扩展时，方便集中管理
-
-缺点：
-
-一个真实角色（被代理角色）就会产生一个代理角色，代
+                            关于动态代理
                         
                     </div>
                     <div class="publish-info">
@@ -713,11 +1029,27 @@
                         </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            Orbit
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-category">
+                                    Java设计模式
+                                </a>
+                            
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
+                        <span class="chip bg-color">Java设计模式</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/">
+                        <span class="chip bg-color">动态代理</span>
+                    </a>
+                    
                 </div>
                 
             </div>
