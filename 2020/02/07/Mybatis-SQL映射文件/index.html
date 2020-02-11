@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="Mybatis SQL映射文件, 小样~ Blog">
-    <meta name="description" content="Mybatis SQL映射文件 | 小样~ Blog">
+    <meta name="description" content="关于Mybatis的SQL映射文件~">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -423,12 +423,25 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Mybatis/">
+                                <span class="chip bg-color">Mybatis</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Mybatis%E6%A1%86%E6%9E%B6/" class="post-category">
+                                Mybatis框架
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -454,7 +467,300 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <h2 id="映射文件-结构"><a href="#映射文件-结构" class="headerlink" title="映射文件 结构"></a>映射文件 结构</h2><p><img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200208105055.png" alt=""></p>
+<h2 id="增删改查-标签"><a href="#增删改查-标签" class="headerlink" title="增删改查 标签"></a>增删改查 标签</h2><blockquote>
+<p>注意事项：</p>
+<ul>
+<li>接口中的增删改方法：可以定义这些类型的返回值：void / Integer /Long / Boolean</li>
+<li>注意增删改需要提交数据<ul>
+<li>手动提交：sqlSessionFactory.openSession();      sqlSession.commit();</li>
+<li>自动提交：sqlSessionFactory.openSession(true);</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h3 id="获取自增主键的值"><a href="#获取自增主键的值" class="headerlink" title="获取自增主键的值"></a>获取自增主键的值</h3><p>我们先来做一个插入测试：</p>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>--</span> <span class="token attr-name">int</span> <span class="token attr-name">addEmp(Employee</span> <span class="token attr-name">employee);</span> <span class="token attr-name">--</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>insert</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>addEmp<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    insert into tbl_employee(last_name, gender, email)
+    values (#{lastName}, #{gender}, #{email})
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>insert</span><span class="token punctuation">></span></span></code></pre>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Test</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">addTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+    SqlSessionFactory sqlSessionFactory <span class="token operator">=</span> <span class="token function">getSqlSessionFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    SqlSession sqlSession <span class="token operator">=</span> sqlSessionFactory<span class="token punctuation">.</span><span class="token function">openSession</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">try</span><span class="token punctuation">{</span>
+        EmployeeMapper mapper <span class="token operator">=</span> sqlSession<span class="token punctuation">.</span><span class="token function">getMapper</span><span class="token punctuation">(</span>EmployeeMapper<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Employee employee <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Employee</span><span class="token punctuation">(</span>null<span class="token punctuation">,</span> <span class="token string">"大白"</span><span class="token punctuation">,</span> <span class="token string">"1"</span><span class="token punctuation">,</span> <span class="token string">"dabai@qq.com"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> count <span class="token operator">=</span> mapper<span class="token punctuation">.</span><span class="token function">addEmp</span><span class="token punctuation">(</span>employee<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>count <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"插入成功:"</span> <span class="token operator">+</span> employee<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token punctuation">{</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"插入失败！"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token keyword">finally</span> <span class="token punctuation">{</span>
+        sqlSession<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<pre><code>DEBUG 02-08 11:06:34,380 ==&gt;  Preparing: insert into tbl_employee(last_name, gender, email) values (?, ?, ?)   (BaseJdbcLogger.java:159) 
+DEBUG 02-08 11:06:34,416 ==&gt; Parameters: 大白(String), 1(String), dabai@qq.com(String)  (BaseJdbcLogger.java:159) 
+DEBUG 02-08 11:06:34,446 &lt;==    Updates: 1  (BaseJdbcLogger.java:159) 
+插入成功:employee{id=null, lastName=&#39;大白&#39;, gender=&#39;1&#39;, email=&#39;dabai@qq.com&#39;}</code></pre><p>此时我们看到插入成功了，但是数据少了一个id</p>
+<p>这是因为【Mysql】支持【主键自增】，我们在执行插入操作时不用指定自增主键的值。</p>
+<p>那么我们如果需要这个自增主键的值，要怎么做呢？</p>
+<p>回忆JDBC，是使用statement.getGeneratedKeys()方法获取主键的。</p>
+<p>同样的，在Mybatis中，也是使用该方法获取主键值的。</p>
+<ul>
+<li><p>useGeneratedKeys=”true” ：使用自增主键获取主键值策略</p>
+</li>
+<li><p>keyProperty=”id”：指定主键对应的JavaBean属性（就是把主键值封装到该javaBean的这个属性中）</p>
+</li>
+</ul>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>insert</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>addEmp<span class="token punctuation">"</span></span> <span class="token attr-name">useGeneratedKeys</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span> <span class="token attr-name">keyProperty</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>id<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    insert into tbl_employee(last_name, gender, email)
+    values (#{lastName}, #{gender}, #{email})
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>insert</span><span class="token punctuation">></span></span></code></pre>
+<pre><code>DEBUG 02-08 11:13:44,496 ==&gt;  Preparing: insert into tbl_employee(last_name, gender, email) values (?, ?, ?)   (BaseJdbcLogger.java:159) 
+DEBUG 02-08 11:13:44,532 ==&gt; Parameters: 大白(String), 1(String), dabai@qq.com(String)  (BaseJdbcLogger.java:159) 
+DEBUG 02-08 11:13:44,539 &lt;==    Updates: 1  (BaseJdbcLogger.java:159) 
+插入成功:employee{id=3, lastName=&#39;大白&#39;, gender=&#39;1&#39;, email=&#39;dabai@qq.com&#39;}</code></pre><p><img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200208112020.png" alt=""></p>
+<h3 id="接口中的参数处理"><a href="#接口中的参数处理" class="headerlink" title="接口中的参数处理"></a>接口中的参数处理</h3><p>单个参数：使用 <code>#{参数名}</code>取出参数值</p>
+<p>多个参数：</p>
+<pre><code>方法：Employee getEmpByIdAndName(Integer id, String lastName);
+取值：#{id},#{lastName}
+测试：Employee emp = mapper.getEmpByIdAndName(1, &quot;小鞠&quot;);
+报错：
+Cause: org.apache.ibatis.binding.BindingException: Parameter &#39;id&#39; not found. Available parameters are [arg1, arg0, param1, param2]</code></pre><p>Mybatis底层做了特殊处理，多个参数会被封装成一个map，#{}就是从map中获取指定key的值</p>
+<blockquote>
+<p>key：param1,param2, … ，或者参数的索引也可以。</p>
+<p>value：传入的参数值</p>
+</blockquote>
+<pre><code>方法：Employee getEmpByIdAndName(Integer id, String lastName);
+取值：#{param1}, #{param2}
+测试：Employee emp = mapper.getEmpByIdAndName(1, &quot;小鞠&quot;);
+输出：employee{id=1, lastName=&#39;小鞠&#39;, gender=&#39;0&#39;, email=&#39;xiaoju@qq.com&#39;}</code></pre><p>但是这样既混乱又不美观，我们可以在接口的参数前使用<code>@Param(&quot;id&quot;)</code>注解</p>
+<p>命名参数：给参数命名，<code>@Param(&quot;id&quot;)</code>明确指定封装参数时map的key，多个参数会被封装成一个map</p>
+<blockquote>
+<p>key：使用<code>@Param(&quot;id&quot;)</code>注解指定的值</p>
+<p>value：参数值</p>
+</blockquote>
+<pre><code>方法：Employee getEmpByIdAndName(@Param(&quot;id&quot;) Integer id, @Param(&quot;lastName&quot;) String lastName);
+取值：#{id},#{lastName}
+测试：Employee emp = mapper.getEmpByIdAndName(1, &quot;小鞠&quot;);
+输出：employee{id=1, lastName=&#39;小鞠&#39;, gender=&#39;0&#39;, email=&#39;xiaoju@qq.com&#39;}</code></pre><p>JavaBean对象：</p>
+<p>若多个参数正好是业务的数据模型，可以直接传入JavaBean对象</p>
+<p>使用<code>#{属性名}</code>取出传入的JavaBean对象的属性值</p>
+<p>Map:</p>
+<p>若多个参数不是业务模型中的数据，不经常使用，我们可以传入map</p>
+<p>使用<code>#{key}</code>取出map中对应的值</p>
+<pre><code>方法：Employee getEmpBymap(Map&lt;String,Object&gt; map);
+取值：#{id},#{lastName}
+测试：
+    Map&lt;String, Object&gt; map = new HashMap&lt;String, Object&gt;();
+    map.put(&quot;id&quot;,&quot;1&quot;);
+    map.put(&quot;lastName&quot;,&quot;小鞠&quot;);
+    Employee emp = mapper.getEmpBymap(map);
+输出：employee{id=1, lastName=&#39;小鞠&#39;, gender=&#39;0&#39;, email=&#39;xiaoju@qq.com&#39;}</code></pre><p>List:</p>
+<p>若参数是数组或集合类（Collection：List / Set），也会将其封装到map中</p>
+<blockquote>
+<p>key：collection / list</p>
+<p>value：collection[0] / list[0]，…</p>
+</blockquote>
+<pre><code>方法：Employee getEmpByIdList(List&lt;Integer&gt; ids);
+取值：#{list[0]}
+测试：
+    List&lt;Integer&gt; list = new ArrayList();
+    list.add(1);
+    Employee emp = mapper.getEmpByIdList(list);
+输出：employee{id=1, lastName=&#39;小鞠&#39;, gender=&#39;0&#39;, email=&#39;xiaoju@qq.com&#39;}</code></pre><h3 id="区别-与-取值"><a href="#区别-与-取值" class="headerlink" title="区别 #与$取值"></a>区别 #与$取值</h3><p>#{}和${}都可以获取map中的值 / JavaBean对象属性值</p>
+<p>区别：</p>
+<p>${}：以预编译形式，将参数设置到SQL语句中（PreparedStatement，防止SQL注入）</p>
+<p>#{}：取出的值直接拼接在SQL语句中，会有安全问题</p>
+<p><img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200208225303.png" alt=""></p>
+<h3 id="select标签的返回值类型（集合：List-Map）"><a href="#select标签的返回值类型（集合：List-Map）" class="headerlink" title="select标签的返回值类型（集合：List / Map）"></a>select标签的返回值类型（集合：List / Map）</h3><p>之前的案例中，接口中的查询方法的返回值类型都是JavaBean类，</p>
+<p>如果返回值是集合类，他的内部构造是什么样子？</p>
+<p><strong>List</strong></p>
+<p>封装JavaBean对象的List，其传参方式和正常JavaBean对象相同</p>
+<p><strong>Map</strong></p>
+<p>封装单条JavaBean对象的Map，其结构为：k（列名）——v（列值）</p>
+<p>封装多条JavaBean对象的Map，其结构为：k（主键）—— v（JavaBean对象）</p>
+<img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200208232616.png" style="zoom:67%;" />
+
+
+
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> SqlSessionFactory <span class="token function">getSqlSessionFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+    String resource <span class="token operator">=</span> <span class="token string">"mybatis-config.xml"</span><span class="token punctuation">;</span>
+    InputStream inputStream <span class="token operator">=</span> Resources<span class="token punctuation">.</span><span class="token function">getResourceAsStream</span><span class="token punctuation">(</span>resource<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    SqlSessionFactory sqlSessionFactory <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SqlSessionFactoryBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span>inputStream<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> sqlSessionFactory<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token annotation punctuation">@Test</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">addTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+    SqlSessionFactory sqlSessionFactory <span class="token operator">=</span> <span class="token function">getSqlSessionFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    SqlSession sqlSession <span class="token operator">=</span> sqlSessionFactory<span class="token punctuation">.</span><span class="token function">openSession</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">try</span><span class="token punctuation">{</span>
+        EmployeeMapper mapper <span class="token operator">=</span> sqlSession<span class="token punctuation">.</span><span class="token function">getMapper</span><span class="token punctuation">(</span>EmployeeMapper<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+        List<span class="token operator">&lt;</span>Employee<span class="token operator">></span> empList <span class="token operator">=</span> mapper<span class="token punctuation">.</span><span class="token function">getEmpLikeName</span><span class="token punctuation">(</span><span class="token string">"%小%"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span>Employee emp <span class="token operator">:</span> empList<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>emp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment" spellcheck="true">//employee{id=1, lastName='小鞠', gender='0', email='xiaoju@qq.com'}</span>
+        <span class="token comment" spellcheck="true">//employee{id=5, lastName='小明', gender='1', email='xiaoming@qq.com'}</span>
+
+
+        Map<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> Object<span class="token operator">></span> empMap <span class="token operator">=</span> mapper<span class="token punctuation">.</span><span class="token function">getEmpByMapId</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>empMap<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+        <span class="token comment" spellcheck="true">//{gender=0, last_name=小鞠, id=1, email=xiaoju@qq.com}</span>
+
+
+        Map<span class="token operator">&lt;</span>Integer<span class="token punctuation">,</span> Employee<span class="token operator">></span> empsMap <span class="token operator">=</span> mapper<span class="token punctuation">.</span><span class="token function">getEmpLikeNameReturnMap</span><span class="token punctuation">(</span><span class="token string">"%小%"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>empsMap<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// {1={gender=0, last_name=小鞠, id=1, email=xiaoju@qq.com}, 5={gender=1, last_name=小明, id=5, email=xiaoming@qq.com}}</span>
+    <span class="token punctuation">}</span><span class="token keyword">finally</span> <span class="token punctuation">{</span>
+        sqlSession<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<h3 id="resultMap：结果集映射规则"><a href="#resultMap：结果集映射规则" class="headerlink" title="resultMap：结果集映射规则"></a>resultMap：结果集映射规则</h3><p>在之前，对于数据库字段（last_name）和属性名（lastName）不一致的问题</p>
+<p>我们提供了2种方案：</p>
+<ul>
+<li>在【全局配置文件】中使用了【驼峰命名规则】</li>
+<li>在【XML映射文件】中的SQL语句给该字段起别名，别名为JavaBean对象的属性名</li>
+</ul>
+<p>现在，有我们也可以在【XML映射文件】中使用【resultMap标签】来自定义结果集映射规则</p>
+<blockquote>
+<p>只有<code>&lt;select&gt;</code>标签才有<code>resultType</code>和<code>resultMap</code>属性，<code>&lt;insert&gt;、&lt;delete&gt;、&lt;update&gt;</code>标签都没有</p>
+<p>resultType和resultMap只能存在一个</p>
+</blockquote>
+<h4 id="解决字段不一致问题"><a href="#解决字段不一致问题" class="headerlink" title="解决字段不一致问题"></a>解决字段不一致问题</h4><p><img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/image-20200209072520884.png" alt=""></p>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>mapper</span> <span class="token attr-name">namespace</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.yang.dao.EmployeeMapper<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>resultMap</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>MyEmp<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.yang.bean.Employee<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        <span class="token comment" spellcheck="true">&lt;!-- 主键 --></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>id</span> <span class="token attr-name">property</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>id<span class="token punctuation">"</span></span> <span class="token attr-name">column</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>id<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+        <span class="token comment" spellcheck="true">&lt;!-- 其余列 --></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>result</span> <span class="token attr-name">property</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>lastName<span class="token punctuation">"</span></span> <span class="token attr-name">column</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>last_name<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>result</span> <span class="token attr-name">property</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>gender<span class="token punctuation">"</span></span> <span class="token attr-name">column</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>gender<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>result</span> <span class="token attr-name">property</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>email<span class="token punctuation">"</span></span> <span class="token attr-name">column</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>email<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>resultMap</span><span class="token punctuation">></span></span>
+
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>select</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>getEmpById<span class="token punctuation">"</span></span> <span class="token attr-name">resultMap</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>MyEmp<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        select * from tbl_employee where id = #{id}
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>select</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>mapper</span><span class="token punctuation">></span></span></code></pre>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> SqlSessionFactory <span class="token function">getSqlSessionFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+    String resource <span class="token operator">=</span> <span class="token string">"mybatis-config.xml"</span><span class="token punctuation">;</span>
+    InputStream inputStream <span class="token operator">=</span> Resources<span class="token punctuation">.</span><span class="token function">getResourceAsStream</span><span class="token punctuation">(</span>resource<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    SqlSessionFactory sqlSessionFactory <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SqlSessionFactoryBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span>inputStream<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> sqlSessionFactory<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+
+<span class="token annotation punctuation">@Test</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">addTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+    SqlSessionFactory sqlSessionFactory <span class="token operator">=</span> <span class="token function">getSqlSessionFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    SqlSession sqlSession <span class="token operator">=</span> sqlSessionFactory<span class="token punctuation">.</span><span class="token function">openSession</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">try</span><span class="token punctuation">{</span>
+        EmployeeMapper mapper <span class="token operator">=</span> sqlSession<span class="token punctuation">.</span><span class="token function">getMapper</span><span class="token punctuation">(</span>EmployeeMapper<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Employee emp <span class="token operator">=</span> mapper<span class="token punctuation">.</span><span class="token function">getEmpById</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>emp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token keyword">finally</span> <span class="token punctuation">{</span>
+        sqlSession<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p><img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200209101911.png" alt=""></p>
+<h4 id="关联查询（一对一-Bean对象）"><a href="#关联查询（一对一-Bean对象）" class="headerlink" title="关联查询（一对一 | Bean对象）"></a>关联查询（一对一 | Bean对象）</h4><p>之前的查询中，我们使用了resultType进行单表查询，如果进行关联查询的话，resultType则有些力不从心了。因为resultType无法明确结果集映射规则，导致dept属性为null。</p>
+<p><img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200209103112.png" alt=""></p>
+<p>这时候我们可以使用resultMap自定义结果集的映射规则</p>
+<h5 id="【嵌套联合查询】使用级联属性封装结果集"><a href="#【嵌套联合查询】使用级联属性封装结果集" class="headerlink" title="【嵌套联合查询】使用级联属性封装结果集"></a>【嵌套联合查询】使用级联属性封装结果集</h5><p><img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200209105431.png" alt=""></p>
+<h5 id="【嵌套联合查询】-lt-association-gt-定义单个对象的封装"><a href="#【嵌套联合查询】-lt-association-gt-定义单个对象的封装" class="headerlink" title="【嵌套联合查询】&lt;association&gt;定义单个对象的封装"></a>【嵌套联合查询】<code>&lt;association&gt;</code>定义单个对象的封装</h5><p><code>&lt;association&gt;</code>可以指定联合的JavaBean对象</p>
+<ul>
+<li>property属性：指定哪个属性是联合的JavaBean对象</li>
+<li>javaType：指定该属性对象的类型</li>
+</ul>
+<p><img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200209105829.png" alt=""></p>
+<h5 id="【分步查询】-lt-association-gt-分步查询"><a href="#【分步查询】-lt-association-gt-分步查询" class="headerlink" title="【分步查询】&lt;association&gt;分步查询"></a>【分步查询】<code>&lt;association&gt;</code>分步查询</h5><p><img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200209120339.png" alt=""></p>
+<p><img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200209120528.png" alt=""></p>
+<h5 id="【分步查询延迟加载】"><a href="#【分步查询延迟加载】" class="headerlink" title="【分步查询延迟加载】"></a>【分步查询延迟加载】</h5><p>在上面的分步拆查询案例中，执行了2次SQL，也就是访问了2次数据库，这样会导致过于频繁的访问数据库，如果我们只想要员工信息而不要部门信息，他还是会去查2次，造成资源浪费，因此Mybatis提供了懒加载策略。当我们需要的时候在加载，否则不加载。</p>
+<p><img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200209121234.png" alt=""></p>
+<p><img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200209121730.png" alt=""></p>
+<h4 id="关联查询（一对多-集合）"><a href="#关联查询（一对多-集合）" class="headerlink" title="关联查询（一对多 | 集合）"></a>关联查询（一对多 | 集合）</h4><p>通过部门编号查询员工，员工信息封装为部门的一个集合属性 </p>
+<h5 id="【嵌套联合查询】"><a href="#【嵌套联合查询】" class="headerlink" title="【嵌套联合查询】"></a>【嵌套联合查询】</h5><pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>yang<span class="token punctuation">.</span>bean<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>List<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Department</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> Integer id<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> String deptName<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> List<span class="token operator">&lt;</span>Employee<span class="token operator">></span> emps<span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// getter setter toString</span>
+<span class="token punctuation">}</span></code></pre>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>yang<span class="token punctuation">.</span>dao<span class="token punctuation">;</span>
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>yang<span class="token punctuation">.</span>bean<span class="token punctuation">.</span>Department<span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">DepartmentMapper</span> <span class="token punctuation">{</span>
+    Department <span class="token function">getDeptById</span><span class="token punctuation">(</span>Integer id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>mapper</span> <span class="token attr-name">namespace</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.yang.dao.DepartmentMapper<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>resultMap</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>myDept<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.yang.bean.Department<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>id</span> <span class="token attr-name">property</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>id<span class="token punctuation">"</span></span> <span class="token attr-name">column</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>did<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>result</span> <span class="token attr-name">property</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>deptName<span class="token punctuation">"</span></span> <span class="token attr-name">column</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>dept_name<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+        <span class="token comment" spellcheck="true">&lt;!-- 定义关联的员工集合属性的封装规则 --></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>collection</span> <span class="token attr-name">property</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>emps<span class="token punctuation">"</span></span> <span class="token attr-name">ofType</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.yang.bean.Employee<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>id</span> <span class="token attr-name">property</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>id<span class="token punctuation">"</span></span> <span class="token attr-name">column</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>eid<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>result</span> <span class="token attr-name">property</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>lastName<span class="token punctuation">"</span></span> <span class="token attr-name">column</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>last_name<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>result</span> <span class="token attr-name">property</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>gender<span class="token punctuation">"</span></span> <span class="token attr-name">column</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>gender<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>result</span> <span class="token attr-name">property</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>email<span class="token punctuation">"</span></span> <span class="token attr-name">column</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>email<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>collection</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>resultMap</span><span class="token punctuation">></span></span>
+
+    <span class="token comment" spellcheck="true">&lt;!-- Department getDeptById(Integer id); --></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>select</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>getDeptById<span class="token punctuation">"</span></span> <span class="token attr-name">resultMap</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>myDept<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        select d.id did, d.dept_name dept_name,
+                e.id eid, e.last_name last_name, e.gender gender, e.email email
+        from tbl_department d
+        left join tbl_employee e
+        on d.id = e.d_id
+        where d.id = #{id}
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>select</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>mapper</span><span class="token punctuation">></span></span></code></pre>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MybatisTest</span> <span class="token punctuation">{</span>
+
+
+    <span class="token keyword">public</span> SqlSessionFactory <span class="token function">getSqlSessionFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+        String resource <span class="token operator">=</span> <span class="token string">"mybatis-config.xml"</span><span class="token punctuation">;</span>
+        InputStream inputStream <span class="token operator">=</span> Resources<span class="token punctuation">.</span><span class="token function">getResourceAsStream</span><span class="token punctuation">(</span>resource<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        SqlSessionFactory sqlSessionFactory <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SqlSessionFactoryBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span>inputStream<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> sqlSessionFactory<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Test</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+
+        SqlSessionFactory sqlSessionFactory <span class="token operator">=</span> <span class="token function">getSqlSessionFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        SqlSession sqlSession <span class="token operator">=</span> sqlSessionFactory<span class="token punctuation">.</span><span class="token function">openSession</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">try</span><span class="token punctuation">{</span>
+            DepartmentMapper mapper <span class="token operator">=</span> sqlSession<span class="token punctuation">.</span><span class="token function">getMapper</span><span class="token punctuation">(</span>DepartmentMapper<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            Department dept <span class="token operator">=</span> mapper<span class="token punctuation">.</span><span class="token function">getDeptById</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>dept<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token keyword">finally</span> <span class="token punctuation">{</span>
+            sqlSession<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<pre><code>Department{id=1, deptName=&#39;开发部&#39;, emps=[Employee{id=1, lastName=&#39;小鞠&#39;, gender=&#39;0&#39;, email=&#39;xiaoju@qq.com&#39;, dept=null}, Employee{id=2, lastName=&#39;大白&#39;, gender=&#39;1&#39;, email=&#39;dabai@qq.com&#39;, dept=null}]}</code></pre><h5 id="【分步查询-延迟加载】"><a href="#【分步查询-延迟加载】" class="headerlink" title="【分步查询 + 延迟加载】"></a>【分步查询 + 延迟加载】</h5><p><img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200209150505.png" alt=""></p>
+<pre><code>Department{id=1, deptName=&#39;开发部&#39;, emps=[Employee{id=1, lastName=&#39;小鞠&#39;, gender=&#39;0&#39;, email=&#39;xiaoju@qq.com&#39;, dept=null}, Employee{id=2, lastName=&#39;大白&#39;, gender=&#39;1&#39;, email=&#39;dabai@qq.com&#39;, dept=null}]}</code></pre><p> <strong>延迟加载</strong></p>
+<p>在collection标签中加入属性<code>fetchType=&quot;lazy&quot;</code>表示延迟加载，<code>fetchType=&quot;eager&quot;</code>表示立即加载</p>
+<h4 id="关于分步查询的column属性"><a href="#关于分步查询的column属性" class="headerlink" title="关于分步查询的column属性"></a>关于分步查询的column属性</h4><p>不管是使用association查询单个对象，还是使用collection查询多个对象（集合），其中都要传入参数，而参数都依靠column属性传递，column可以传递一个参数或多个参数（将参数封装为map）</p>
+<p>单参数：column=”id”</p>
+<p>多参数：column=“{key1=column1, key2=column2}”，使用#{key1}接收参数</p>
+<img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200209151627.png" style="zoom:67%;" />
+
+
+
+
             </div>
             <hr/>
 
@@ -469,7 +775,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://yoursite.com" rel="external nofollow noreferrer">Orbit</a>
+                    <a href="http://yoursite.com" rel="external nofollow noreferrer">杨涵</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -492,7 +798,7 @@
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="http://yoursite.com" target="_blank">Orbit</a>
+                    <a href="http://yoursite.com" target="_blank">杨涵</a>
                     !
                 </span>
             </div>
@@ -516,7 +822,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/Mybatis/">
+                                    <span class="chip bg-color">Mybatis</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -680,18 +990,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/02/07/Mybatis-SQL%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6/">
+                <a href="/2020/02/09/Mybatis-%E5%8A%A8%E6%80%81SQL/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Mybatis SQL映射文件">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Mybatis 动态SQL">
                         
-                        <span class="card-title">Mybatis SQL映射文件</span>
+                        <span class="card-title">Mybatis 动态SQL</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -701,9 +1010,9 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-02-07
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-02-09
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -712,7 +1021,6 @@
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
@@ -735,10 +1043,7 @@
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            全局配置文件的顶层结构
-各标签内容(1)  properties标签：引入外部properties文件&lt;properties resource="db.properties">&lt;/properties>
-
-&lt;propert
+                            关于Mybatis的全局配置文件~
                         
                     </div>
                     <div class="publish-info">
@@ -747,11 +1052,23 @@
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            Orbit
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Mybatis%E6%A1%86%E6%9E%B6/" class="post-category">
+                                    Mybatis框架
+                                </a>
+                            
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Mybatis/">
+                        <span class="chip bg-color">Mybatis</span>
+                    </a>
+                    
                 </div>
                 
             </div>

@@ -5,10 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="MyBatis 全局配置文件, 小样~ Blog">
-    <meta name="description" content="全局配置文件的顶层结构
-各标签内容(1)  properties标签：引入外部properties文件&amp;lt;properties resource=&#34;db.properties&#34;&gt;&amp;lt;/properties&gt;
-
-&amp;lt;propert">
+    <meta name="description" content="关于Mybatis的全局配置文件~">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -426,12 +423,25 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Mybatis/">
+                                <span class="chip bg-color">Mybatis</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Mybatis%E6%A1%86%E6%9E%B6/" class="post-category">
+                                Mybatis框架
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -458,22 +468,24 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="全局配置文件的顶层结构"><a href="#全局配置文件的顶层结构" class="headerlink" title="全局配置文件的顶层结构"></a>全局配置文件的顶层结构</h2><p><img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200207164112.png" alt=""></p>
-<h2 id="各标签内容"><a href="#各标签内容" class="headerlink" title="各标签内容"></a>各标签内容</h2><h3 id="1-properties标签：引入外部properties文件"><a href="#1-properties标签：引入外部properties文件" class="headerlink" title="(1)  properties标签：引入外部properties文件"></a>(1)  properties标签：引入外部properties文件</h3><pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>properties</span> <span class="token attr-name">resource</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>db.properties<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>properties</span><span class="token punctuation">></span></span></code></pre>
+<p>全局配置文件中，标签的位置是有顺序的，必须按照顺序排列。</p>
 <blockquote>
+<p>The content of element type “configuration” must match “(properties?,settings?,typeAliases?,typeHandlers?,objectFactory?,objectWrapperFactory?,reflectorFactory?,plugins?,environments?,databaseIdProvider?,mappers?)”.</p>
+</blockquote>
+<h2 id="各标签内容"><a href="#各标签内容" class="headerlink" title="各标签内容"></a>各标签内容</h2><h3 id="1-properties标签：引入外部properties文件"><a href="#1-properties标签：引入外部properties文件" class="headerlink" title="(1)  properties标签：引入外部properties文件"></a>(1)  properties标签：引入外部properties文件</h3><pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>properties</span> <span class="token attr-name">resource</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>db.properties<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>properties</span><span class="token punctuation">></span></span></code></pre>
 <p><code>&lt;properties&gt;</code>：可以引入外部的properties配置文件的内容</p>
 <blockquote>
 <p>url属性：引入【网络路径】 / 【磁盘路径】下的资源</p>
 <p>resource属性：引入【类路径】下的资源</p>
-</blockquote>
 </blockquote>
 <h3 id="2-settings标签：设置项"><a href="#2-settings标签：设置项" class="headerlink" title="(2)  settings标签：设置项"></a>(2)  settings标签：设置项</h3><pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>settings</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>--</span> <span class="token attr-name">开启自动驼峰命名规则（camel</span> <span class="token attr-name">case）映射</span> <span class="token attr-name">--</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>setting</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>mapUnderscoreToCamelCase<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>settings</span><span class="token punctuation">></span></span></code></pre>
 <p><code>&lt;settings&gt;</code>：运行时行为设置，这些设置可以改变Mybatis的运行时行为</p>
-<blockquote>
-<p><code>&lt;setting name=&quot;设置项名称&quot; value=&quot;设置项取值&quot;&gt;</code>：某一项设置项</p>
-</blockquote>
+<ul>
+<li><code>&lt;setting name=&quot;设置项名称&quot; value=&quot;设置项取值&quot;&gt;</code>：某一项设置项</li>
+</ul>
 <p>举个栗子（上面的例子）什么意思呢？</p>
 <p><img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200207212830.png" alt=""></p>
 <h3 id="3-typealiases标签：起别名"><a href="#3-typealiases标签：起别名" class="headerlink" title="(3)  typealiases标签：起别名"></a>(3)  typealiases标签：起别名</h3><pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>typealiases</span><span class="token punctuation">></span></span>
@@ -481,18 +493,23 @@
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>package</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.yang.bean<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>package</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>typealiases</span><span class="token punctuation">></span></span></code></pre>
 <p><code>&lt;typealiases&gt;</code>：给Java类起简短的类型别名，默认别名是类名小写，但是别名不区分大小写。</p>
+<ul>
+<li><p><code>&lt;typealias  type=&quot;java类全限定类名&quot;  alias=&quot;自定义别名”&gt;</code>：给单个Java类型起别名</p>
+</li>
+<li><p><code>&lt;package name=&quot;包全限定名&quot;&gt;</code>：给某个包下的所有类起别名</p>
+<ul>
+<li><code>@alias(&quot;xxx&quot;)</code>：可以在某个Java类上加上注解 <code>@alias(&quot;xxx&quot;)</code>给这个包下的某个类单独起别名</li>
+</ul>
+</li>
+</ul>
 <blockquote>
-<p><code>&lt;typealias  type=&quot;java类全限定类名&quot;  alias=&quot;自定义别名”&gt;</code>：给单个Java类型起别名</p>
-<p><code>&lt;package name=&quot;包全限定名&quot;&gt;</code>：给某个包下的所有类起别名</p>
-<blockquote>
-<p><code>@alias(&quot;xxx&quot;)</code>：可以在某个Java类上加上注解 <code>@alias(&quot;xxx&quot;)</code>给这个包下的某个类单独起别名</p>
-</blockquote>
-</blockquote>
 <p>Mybatis有内置别名（JavaAPI）：在起别名时注意别和以下内置别名重复。</p>
+</blockquote>
 <p><img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200207220726.png" alt=""></p>
 <h3 id="4-typeHandler标签：字段类型映射属性类型"><a href="#4-typeHandler标签：字段类型映射属性类型" class="headerlink" title="(4)  typeHandler标签：字段类型映射属性类型"></a>(4)  typeHandler标签：字段类型映射属性类型</h3><p>适配数据库字段的类型与JavaBean属性的类型。</p>
 <p>如JavaBean中的String 适配  数据库中的char / varchar</p>
-<h3 id="5-plugins标签：插件"><a href="#5-plugins标签：插件" class="headerlink" title="(5) plugins标签：插件"></a>(5) plugins标签：插件</h3><h3 id="6-environments标签：环境配置"><a href="#6-environments标签：环境配置" class="headerlink" title="(6)  environments标签：环境配置"></a>(6)  environments标签：环境配置</h3><pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>environments</span> <span class="token attr-name">default</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>development<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<h3 id="5-plugins标签：插件"><a href="#5-plugins标签：插件" class="headerlink" title="(5) plugins标签：插件"></a>(5) plugins标签：插件</h3><p>MyBatis 允许你在已映射语句执行过程中的某一点进行拦截调用。</p>
+<h3 id="6-environments标签：环境配置"><a href="#6-environments标签：环境配置" class="headerlink" title="(6)  environments标签：环境配置"></a>(6)  environments标签：环境配置</h3><pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>environments</span> <span class="token attr-name">default</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>development<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>environment</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>development<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>transactionManager</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>JDBC<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dataSource</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>POOLED<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
@@ -503,20 +520,62 @@
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dataSource</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>environment</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>environments</span><span class="token punctuation">></span></span></code></pre>
-<p><environments>：mybatis可以同时配置多种环境</p>
+<p><code>&lt;environments&gt;</code>：mybatis可以同时配置多种环境</p>
+<ul>
+<li><code>&lt;environment id=&quot;环境的唯一标识&quot;&gt;</code>：配置单个具体的环境信息<ul>
+<li><code>&lt;transactionManager type=&quot;事务管理器类型（JDBC|MANAGED）&quot;&gt;</code>：事务管理器</li>
+<li><code>&lt;dataSource type=&quot;数据源类型（UNPOOLED|POOLED|JNDI）&quot;&gt;</code>：数据源信息，UNPOOLED表示不使用连接池技术，POOLED表示使用连接池技术<ul>
+<li><code>&lt;property name=&quot;&quot; value=&quot;&quot;&gt;</code>：数据源的配置信息</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="7-databaseIdProvider标签：数据库厂商标识"><a href="#7-databaseIdProvider标签：数据库厂商标识" class="headerlink" title="(7)  databaseIdProvider标签：数据库厂商标识"></a>(7)  databaseIdProvider标签：数据库厂商标识</h3><p><img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/image-20200208095929157.png" alt=""></p>
+<h3 id="8-mappers标签：映射器"><a href="#8-mappers标签：映射器" class="headerlink" title="(8)  mappers标签：映射器"></a>(8)  mappers标签：映射器</h3><p><code>&lt;mappers&gt;</code>：将SQL映射文件注册到全局配置文件中</p>
+<ul>
+<li><p><code>&lt;mapper&gt;</code>：注册一个SQL映射文件 / 接口</p>
 <blockquote>
-<p><environment id="环境的唯一标识">：配置单个具体的环境信息</p>
-<blockquote>
-<p><transactionManager type="事务管理器类型（JDBC|MANAGED）">：事务管理器</p>
-<p><dataSource type="">：数据源信息</p>
-<blockquote>
-<property name="" value="">
+<p>注册映射文件：</p>
+<ul>
+<li><p>resource属性：引用类路径下的SQL映射文件</p>
+<p><code>&lt;mapper resource=&quot;xxx/xxx/xxxMapper.xml&quot;/&gt;</code></p>
+</li>
+<li><p>url属性：引用网络路径 / 磁盘路径下的SQL映射文件</p>
+<p><code>&lt;mapper url=&quot;file:///mapper/xxxMapper.xml&quot;/&gt;</code></p>
+</li>
+</ul>
+<p>注册接口：</p>
+<ul>
+<li>class属性：<code>&lt;mapper class=&quot;xxx.xxx.xxxMapper&quot;/&gt;</code><ul>
+<li>若采用映射文件方式，则映射文件必须和接口【同名同目录】</li>
+<li>若采用注解方式，所有SQL都用注解写在接口上，则无要求</li>
+</ul>
+</li>
+</ul>
 </blockquote>
-</blockquote>
-</blockquote>
-<h3 id="7"><a href="#7" class="headerlink" title="(7)"></a>(7)</h3><h3 id="8"><a href="#8" class="headerlink" title="(8)"></a>(8)</h3><pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>configuration</span><span class="token punctuation">></span></span>
+</li>
+<li><p><code>&lt;package&gt;</code>：批量注册SQL映射文件</p>
+<p><code>&lt;package name=&quot;xxx.xxx.xxx.dao&quot;/&gt;</code></p>
+</li>
+</ul>
+<h2 id="标签总览"><a href="#标签总览" class="headerlink" title="标签总览"></a>标签总览</h2><p><img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200208103932.png" alt=""></p>
+<pre class=" language-xml"><code class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8" ?></span>
+<span class="token doctype">&lt;!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd"></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>configuration</span><span class="token punctuation">></span></span>
 
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>properties</span> <span class="token attr-name">resource</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>dbconfig.properties<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>properties</span><span class="token punctuation">></span></span>
+
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>settings</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>setting</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>mapUnderscoreToCamelCase<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>settings</span><span class="token punctuation">></span></span>
+
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>typeAliases</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>package</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.yang.bean<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>typeAliases</span><span class="token punctuation">></span></span>
+
 
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>environments</span> <span class="token attr-name">default</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>development<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>environment</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>development<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
@@ -530,9 +589,15 @@
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>environment</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>environments</span><span class="token punctuation">></span></span>
 
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>databaseIdProvider</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>DB_VENDOR<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>SQL Server<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>sqlserver<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>MySQL<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>mysql<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Oracle<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>oracle<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>databaseIdProvider</span><span class="token punctuation">></span></span>
+
     <span class="token comment" spellcheck="true">&lt;!-- 将写好的sql映射文件注册到全局配置文件中 --></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>mappers</span><span class="token punctuation">></span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>mapper</span> <span class="token attr-name">resource</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>EmployeeMapper.xml<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>package</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.yang.dao<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>mappers</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>configuration</span><span class="token punctuation">></span></span></code></pre>
 
@@ -550,7 +615,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://yoursite.com" rel="external nofollow noreferrer">Orbit</a>
+                    <a href="http://yoursite.com" rel="external nofollow noreferrer">杨涵</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -573,7 +638,7 @@
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="http://yoursite.com" target="_blank">Orbit</a>
+                    <a href="http://yoursite.com" target="_blank">杨涵</a>
                     !
                 </span>
             </div>
@@ -597,7 +662,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/Mybatis/">
+                                    <span class="chip bg-color">Mybatis</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -777,7 +846,7 @@
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            关于Mybatis的SQL映射文件~
                         
                     </div>
                     <div class="publish-info">
@@ -786,11 +855,23 @@
                         </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            Orbit
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Mybatis%E6%A1%86%E6%9E%B6/" class="post-category">
+                                    Mybatis框架
+                                </a>
+                            
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Mybatis/">
+                        <span class="chip bg-color">Mybatis</span>
+                    </a>
+                    
                 </div>
                 
             </div>
