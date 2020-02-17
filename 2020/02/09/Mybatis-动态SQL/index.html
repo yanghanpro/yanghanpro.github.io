@@ -5,7 +5,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="Mybatis 动态SQL, 小样~ Blog">
-    <meta name="description" content="Mybatis 动态SQL | 小样~ Blog">
+    <meta name="description" content="if：判断要求：动态查询员工信息，携带了任何信息都可以查询员工
+寻常方法：
+&amp;lt;select id=&#34;getEmpByConditionIf&#34; resultType=&#34;com.yang.bean.Employee&#34;&gt;
+    selec">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -454,7 +457,247 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <h2 id="if：判断"><a href="#if：判断" class="headerlink" title="if：判断"></a>if：判断</h2><p>要求：动态查询员工信息，携带了任何信息都可以查询员工</p>
+<p>寻常方法：</p>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>select</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>getEmpByConditionIf<span class="token punctuation">"</span></span> <span class="token attr-name">resultType</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.yang.bean.Employee<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    select * from tbl_employee
+    where
+    <span class="token comment" spellcheck="true">&lt;!-- test属性中是OGNL表达式，类似EL表达式 --></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>id!<span class="token punctuation">=</span>null<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        and id = #{id}
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+    <span class="token comment" spellcheck="true">&lt;!-- 如果包含特殊符号，需要转义 --></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>lastName!<span class="token punctuation">=</span>null and lastName!<span class="token punctuation">=</span>&amp;quot;&amp;quot;<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        and last_name like #{lastName}
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+    <span class="token comment" spellcheck="true">&lt;!-- OGNL会自动进行字符串和数字转换 --></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>gender<span class="token punctuation">=</span><span class="token punctuation">=</span>0 or gender<span class="token punctuation">=</span><span class="token punctuation">=</span>1<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        and gender = #{gender}
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>email!<span class="token punctuation">=</span>null and email.trim()!<span class="token punctuation">=</span>&amp;quot;&amp;quot;<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        and email = #{email}
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>select</span><span class="token punctuation">></span></span></code></pre>
+<h2 id="where：字符串截取-封装查询条件"><a href="#where：字符串截取-封装查询条件" class="headerlink" title="where：字符串截取 | 封装查询条件"></a>where：字符串截取 | 封装查询条件</h2><p>但是这样会有问题，当id为null时，就会多出一个and，报错</p>
+<pre><code>### SQL: select * from tbl_employee where and last_name like ?</code></pre><p>为了解决and问题，有2种方法：</p>
+<ul>
+<li><p>【普通】where 1=1</p>
+</li>
+<li><p>【推荐】使用where标签，将所有查询条件包含在内，其中所有SQL语句<strong>之前</strong>都加and / or，mybatis会将where标签内的sql，多出来的一个and或or去掉</p>
+</li>
+</ul>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>select</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>getEmpByConditionIf<span class="token punctuation">"</span></span> <span class="token attr-name">resultType</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.yang.bean.Employee<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    select * from tbl_employee
+    where 1=1
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>id!<span class="token punctuation">=</span>null<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        and id = #{id}
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>lastName!<span class="token punctuation">=</span>null and lastName!<span class="token punctuation">=</span>&amp;quot;&amp;quot;<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        and last_name like #{lastName}
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>gender<span class="token punctuation">=</span><span class="token punctuation">=</span>0 or gender<span class="token punctuation">=</span><span class="token punctuation">=</span>1<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        and gender = #{gender}
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>email!<span class="token punctuation">=</span>null and email.trim()!<span class="token punctuation">=</span>&amp;quot;&amp;quot;<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        and email = #{email}
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>select</span><span class="token punctuation">></span></span></code></pre>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>select</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>getEmpByConditionIf<span class="token punctuation">"</span></span> <span class="token attr-name">resultType</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.yang.bean.Employee<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    select * from tbl_employee
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>where</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>id!<span class="token punctuation">=</span>null<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            and id = #{id}
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>lastName!<span class="token punctuation">=</span>null and lastName!<span class="token punctuation">=</span>&amp;quot;&amp;quot;<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            and last_name like #{lastName}
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>gender<span class="token punctuation">=</span><span class="token punctuation">=</span>0 or gender<span class="token punctuation">=</span><span class="token punctuation">=</span>1<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            and gender = #{gender}
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>email!<span class="token punctuation">=</span>null and email.trim()!<span class="token punctuation">=</span>&amp;quot;&amp;quot;<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            and email = #{email}
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>where</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>select</span><span class="token punctuation">></span></span></code></pre>
+<pre><code>DEBUG 02-09 15:37:19,043 ==&gt;  Preparing: select * from tbl_employee where 1=1 and last_name like ?   (BaseJdbcLogger.java:159) 
+DEBUG 02-09 15:37:19,075 ==&gt; Parameters: %小%(String)  (BaseJdbcLogger.java:159) 
+DEBUG 02-09 15:37:19,100 &lt;==      Total: 2  (BaseJdbcLogger.java:159) 
+Employee{id=1, lastName=&#39;小鞠&#39;, gender=&#39;0&#39;, email=&#39;xiaoju@qq.com&#39;, dept=null}
+Employee{id=5, lastName=&#39;小明&#39;, gender=&#39;1&#39;, email=&#39;xiaoming@qq.com&#39;, dept=null}</code></pre><blockquote>
+<p> 注意事项：where只能去掉第一个多出来的or或and，而且必须在前面</p>
+</blockquote>
+<h2 id="trim：字符串截取（万金油）"><a href="#trim：字符串截取（万金油）" class="headerlink" title="trim：字符串截取（万金油）"></a>trim：字符串截取（万金油）</h2><p>如果把and放在SQL语句后面，那么where标签无法去除。</p>
+<p>因此我们可以使用trim标签解决，trim标签体中是整个字符串拼接后的结果</p>
+<ul>
+<li>prefix：前缀，给拼串后的整个SQL字符串加一个前缀</li>
+<li>prefixOverrides：前缀覆盖，去掉整个字符串前面多余的字符</li>
+<li>suffix：后缀，给拼串后的整个SQL字符串加一个后缀</li>
+<li>suffixOverrides：后缀覆盖，去掉整个字符串后面多余的字符</li>
+</ul>
+<pre class=" language-xml"><code class="language-xml"><span class="token comment" spellcheck="true">&lt;!-- List&lt;Employee> getEmpByConditionTrim(Employee employee); --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>select</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>getEmpByConditionTrim<span class="token punctuation">"</span></span> <span class="token attr-name">resultType</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.yang.bean.Employee<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    select * from tbl_employee
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>trim</span> <span class="token attr-name">prefix</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>where<span class="token punctuation">"</span></span> <span class="token attr-name">suffixOverrides</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>and<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>id!<span class="token punctuation">=</span>null<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            id = #{id} and
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>lastName!<span class="token punctuation">=</span>null and lastName!<span class="token punctuation">=</span>&amp;quot;&amp;quot;<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            last_name like #{lastName} and
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>gender<span class="token punctuation">=</span><span class="token punctuation">=</span>0 or gender<span class="token punctuation">=</span><span class="token punctuation">=</span>1<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            gender = #{gender} and
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>email!<span class="token punctuation">=</span>null and email.trim()!<span class="token punctuation">=</span>&amp;quot;&amp;quot;<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            email = #{email}
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>trim</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>select</span><span class="token punctuation">></span></span></code></pre>
+<h2 id="choose：分支选择"><a href="#choose：分支选择" class="headerlink" title="choose：分支选择"></a>choose：分支选择</h2><p>我们还可以使用分支选择，类似Java中带有break的switch-case，只会进入其中一个分支。如果有多个查询属性，只会进入第一个。</p>
+<pre class=" language-xml"><code class="language-xml"><span class="token comment" spellcheck="true">&lt;!-- List&lt;Employee> getEmpByConditionChoose(Employee employee); --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>select</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>getEmpByConditionChoose<span class="token punctuation">"</span></span> <span class="token attr-name">resultType</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.yang.bean.Employee<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    select * from tbl_employee
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>where</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>choose</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>when</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>id!<span class="token punctuation">=</span>null<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+                id=#{id}
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>when</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>when</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>lastName!<span class="token punctuation">=</span>null<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+                last_name like #{lastName}
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>when</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>when</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>email!<span class="token punctuation">=</span>null<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+                email = #{email}
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>when</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>otherwise</span><span class="token punctuation">></span></span>
+                gender = 0
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>otherwise</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>choose</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>where</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>select</span><span class="token punctuation">></span></span></code></pre>
+<h2 id="Set：字符串截取-封装更新条件"><a href="#Set：字符串截取-封装更新条件" class="headerlink" title="Set：字符串截取 | 封装更新条件"></a>Set：字符串截取 | 封装更新条件</h2><p>当我们要修改某条数据时，并不是所有字段都更新，而是只更新被修改的字段，因此首先我们考虑使用if标签。</p>
+<pre class=" language-xml"><code class="language-xml"><span class="token comment" spellcheck="true">&lt;!-- int updateEmpByConditionSet(Employee employee); --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>update</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>updateEmpByConditionSet<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    update tbl_employee
+    set
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>lastName!<span class="token punctuation">=</span>null and lastName!<span class="token punctuation">=</span>&amp;quot;&amp;quot;<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        last_name = #{lastName},
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>gender<span class="token punctuation">=</span><span class="token punctuation">=</span>0 or gender<span class="token punctuation">=</span><span class="token punctuation">=</span>1<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        gender = #{gender},
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>email!<span class="token punctuation">=</span>null and email.trim()!<span class="token punctuation">=</span>&amp;quot;&amp;quot;<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        email = #{email}
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+    where id = #{id}
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>update</span><span class="token punctuation">></span></span></code></pre>
+<pre class=" language-java"><code class="language-java">    <span class="token annotation punctuation">@Test</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+
+        SqlSessionFactory sqlSessionFactory <span class="token operator">=</span> <span class="token function">getSqlSessionFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        SqlSession sqlSession <span class="token operator">=</span> sqlSessionFactory<span class="token punctuation">.</span><span class="token function">openSession</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">try</span><span class="token punctuation">{</span>
+            EmployeeMapperDynamicSQL mapper <span class="token operator">=</span> sqlSession<span class="token punctuation">.</span><span class="token function">getMapper</span><span class="token punctuation">(</span>EmployeeMapperDynamicSQL<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            Employee employee <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Employee</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token string">"小小黑"</span><span class="token punctuation">,</span> null<span class="token punctuation">,</span> null<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            List<span class="token operator">&lt;</span>Employee<span class="token operator">></span> emps <span class="token operator">=</span> mapper<span class="token punctuation">.</span><span class="token function">getEmpByConditionChoose</span><span class="token punctuation">(</span>employee<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span>Employee emp <span class="token operator">:</span> emps<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>emp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token keyword">finally</span> <span class="token punctuation">{</span>
+            sqlSession<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span></code></pre>
+<img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200209192017.png" style="zoom:67%;" />
+
+
+
+<p>可以看到报错了，原因是多了个逗号。</p>
+<p>因此Mybatis提供了Set标签解决多余的逗号问题。</p>
+<pre class=" language-xml"><code class="language-xml"><span class="token comment" spellcheck="true">&lt;!-- int updateEmpByConditionSet(Employee employee); --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>update</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>updateEmpByConditionSet<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    update tbl_employee
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>set</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>lastName!<span class="token punctuation">=</span>null and lastName!<span class="token punctuation">=</span>&amp;quot;&amp;quot;<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            last_name = #{lastName},
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>gender<span class="token punctuation">=</span><span class="token punctuation">=</span>0 or gender<span class="token punctuation">=</span><span class="token punctuation">=</span>1<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            gender = #{gender},
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>email!<span class="token punctuation">=</span>null and email.trim()!<span class="token punctuation">=</span>&amp;quot;&amp;quot;<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            email = #{email}
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>set</span><span class="token punctuation">></span></span>
+    where id = #{id}
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>update</span><span class="token punctuation">></span></span></code></pre>
+<img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200209192419.png" style="zoom:67%;" />
+
+
+
+<p>这个问题也可以使用trim标签解决：加上前置set，去掉多余后缀“，”</p>
+<p>（trim标签真香<del>~</del>）</p>
+<pre class=" language-xml"><code class="language-xml"><span class="token comment" spellcheck="true">&lt;!-- int updateEmpByConditionTrim(Employee employee); --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>update</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>updateEmpByConditionTrim<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    update tbl_employee
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>trim</span> <span class="token attr-name">prefix</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>set<span class="token punctuation">"</span></span> <span class="token attr-name">suffixOverrides</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>,<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>lastName!<span class="token punctuation">=</span>null and lastName!<span class="token punctuation">=</span>&amp;quot;&amp;quot;<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            last_name = #{lastName},
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>gender<span class="token punctuation">=</span><span class="token punctuation">=</span>0 or gender<span class="token punctuation">=</span><span class="token punctuation">=</span>1<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            gender = #{gender},
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>email!<span class="token punctuation">=</span>null and email.trim()!<span class="token punctuation">=</span>&amp;quot;&amp;quot;<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            email = #{email}
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>trim</span><span class="token punctuation">></span></span>
+    where id = #{id}
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>update</span><span class="token punctuation">></span></span></code></pre>
+<h2 id="foreach："><a href="#foreach：" class="headerlink" title="foreach："></a>foreach：</h2><h2 id="内置参数"><a href="#内置参数" class="headerlink" title="内置参数"></a>内置参数</h2><p>在这些OGNL表达式中，我们可以使用方法传递过来的参数进行判断和取值</p>
+<p>Mybatis也提供了2个内置参数</p>
+<ul>
+<li>_parameter：代表整个参数<ul>
+<li>单参：_parameter就是该参数</li>
+<li>多参：参数被封装为一个map，_parameter就是这个map</li>
+</ul>
+</li>
+<li>_databaseId：在配置了databaseIdProvider标签后，_databaseId就代表当前数据库的别名</li>
+</ul>
+<pre class=" language-xml"><code class="language-xml">    <span class="token comment" spellcheck="true">&lt;!-- List&lt;Employee> getEmpByInnerParameter(Employee employee); --></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>select</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>getEmpByInnerParameter<span class="token punctuation">"</span></span> <span class="token attr-name">resultType</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.yang.bean.Employee<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>_databaseId<span class="token punctuation">=</span><span class="token punctuation">=</span><span class="token punctuation">'</span>mysql<span class="token punctuation">'</span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            select * from tbl_employee
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>_parameter!<span class="token punctuation">=</span>null<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+                where id = #{_parameter.id} and last_name = #{lastName}
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>_databaseId<span class="token punctuation">=</span><span class="token punctuation">=</span><span class="token punctuation">'</span>oracle<span class="token punctuation">'</span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            select * from tbl_employee
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>_parameter!<span class="token punctuation">=</span>null<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+                where id = #{_parameter.id} and last_name = #{lastName}
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>select</span><span class="token punctuation">></span></span></code></pre>
+<img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200209215342.png" style="zoom:67%;" />
+
+
+
+<h2 id="bind：绑定"><a href="#bind：绑定" class="headerlink" title="bind：绑定"></a>bind：绑定</h2><p>我们在做模糊查询时，需要写%或_</p>
+<p>这些符号通常写在SQL语句中或测试中</p>
+<ul>
+<li><p>【推荐，灵活7】employee.setLaseName(“%大%”);——&gt;#{lastName}</p>
+</li>
+<li><p>【有安全问题】employee.setLaseName(“大”);——&gt;’%${lastName}’</p>
+</li>
+</ul>
+<p>还有一种方法。</p>
+<p>bind标签可以将OGNL表达式的值绑定到一个变量上，方便后来引用该变量</p>
+<p>通过bind标签可以有效的将特殊符号提取出来，在需要的SQL语句中引入即可。</p>
+<pre class=" language-xml"><code class="language-xml"><span class="token comment" spellcheck="true">&lt;!-- List&lt;Employee> getEmpByLastNameWithBind(Employee employee); --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>select</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>getEmpByLastNameWithBind<span class="token punctuation">"</span></span> <span class="token attr-name">resultType</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.yang.bean.Employee<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bind</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>_lastName<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span><span class="token punctuation">'</span>%<span class="token punctuation">'</span>+lastName+<span class="token punctuation">'</span>%<span class="token punctuation">'</span><span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+    select * from tbl_employee where last_name like #{_lastName}
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>select</span><span class="token punctuation">></span></span></code></pre>
+<img src="https://yanghanblog.oss-cn-hangzhou.aliyuncs.com/newpic/20200209220727.png" style="zoom:67%;" />
             </div>
             <hr/>
 
@@ -696,10 +939,10 @@
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            if：判断要求：动态查询员工信息，携带了任何信息都可以查询员工
-寻常方法：
-&lt;select id="getEmpByConditionIf" resultType="com.yang.bean.Employee">
-    selec
+                            一级缓存（本地缓存）一级缓存 简述一级缓存，是sqlSession（会话）级别的缓存，其本质是SqlSession的一个Map
+一级缓存默认是开启的
+与数据库同一次会话期间查询到的数据会被放在一级缓存中
+以后若是需要获取相同的数据，直接从缓
                         
                     </div>
                     <div class="publish-info">
